@@ -3,6 +3,8 @@ package com.example.loverbe.model.entity.user.nccdv;
 import lombok.*;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
@@ -12,6 +14,7 @@ import javax.persistence.Id;
 @RequiredArgsConstructor
 public class ServiceByNCCDV {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
@@ -19,6 +22,4 @@ public class ServiceByNCCDV {
     private Boolean status;
 
     private Double price;
-
-
 }

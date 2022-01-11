@@ -17,10 +17,10 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(targetEntity = User.class)
     private User user;
 
-    @ManyToOne
+    @ManyToOne(targetEntity = NCCDV.class)
     private NCCDV nccdv;
 
     private String place;

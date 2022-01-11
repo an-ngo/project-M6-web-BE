@@ -4,6 +4,7 @@ import com.example.loverbe.model.entity.user.nccdv.Hobby;
 import com.example.loverbe.model.entity.user.nccdv.Image;
 import com.example.loverbe.enums.EnumStatusNCCDV;
 import com.example.loverbe.model.entity.user.nccdv.ServiceByNCCDV;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -19,7 +20,7 @@ public class NCCDV {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @OneToOne(targetEntity = User.class)
     private User user;
 
     private String yearOfBirth;
@@ -31,7 +32,7 @@ public class NCCDV {
     @ManyToMany(targetEntity = ServiceByNCCDV.class)
     private List<ServiceByNCCDV> serviceByNCCDVList;
 
-    @OneToMany(targetEntity = Image.class)
+    @OneToMany(mappedBy = "nccdv")
     private List<Image> imageList;
 
     private String height;
@@ -54,5 +55,4 @@ public class NCCDV {
     private EnumStatusNCCDV status;
 
     private Long viewCount;
-
 }
