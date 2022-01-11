@@ -7,7 +7,9 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
 @AllArgsConstructor
 @RequiredArgsConstructor
 public class Room {
@@ -17,7 +19,9 @@ public class Room {
 
     private String name;
 
-    @OneToMany(mappedBy = "room")
+    @OneToMany(targetEntity = Message.class)
     @JsonBackReference
+    @ToString.Exclude
     private List<Message> messageList;
+
 }
