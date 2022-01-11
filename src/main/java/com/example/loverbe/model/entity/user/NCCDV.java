@@ -1,11 +1,13 @@
 package com.example.loverbe.model.entity.user;
 
+import com.example.loverbe.enums.EnumStatusNCCDV;
 import com.example.loverbe.model.entity.user.nccdv.Hobby;
 import com.example.loverbe.model.entity.user.nccdv.Image;
-import com.example.loverbe.enums.EnumStatusNCCDV;
 import com.example.loverbe.model.entity.user.nccdv.ServiceByNCCDV;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
@@ -29,7 +31,9 @@ public class NCCDV {
 
     private String country;
 
-    @ManyToMany(targetEntity = ServiceByNCCDV.class)
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "nccdv_servicebynccdv",
+            joinColumns = {@JoinColumn(name = "nccdv_id")}, inverseJoinColumns = {@JoinColumn(name = "service_bynccdv_id")})
     private List<ServiceByNCCDV> serviceByNCCDVList;
 
     @OneToMany(mappedBy = "nccdv")
@@ -39,12 +43,14 @@ public class NCCDV {
 
     private String weight;
 
-    @ManyToMany(targetEntity = Hobby.class)
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "nccdv_hobby",
+            joinColumns = {@JoinColumn(name = "nccdv_id")}, inverseJoinColumns = {@JoinColumn(name = "hobby_id")})
     private List<Hobby> hobbyList;
 
     private String description;
 
-    private String condition;
+    private String conditions;
 
     private String link_facebook;
 

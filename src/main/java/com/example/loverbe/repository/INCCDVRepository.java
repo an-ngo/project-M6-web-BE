@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface INCCDV extends JpaRepository<NCCDV, Long> {
+public interface INCCDVRepository extends JpaRepository<NCCDV, Long> {
     Optional<NCCDV> findByUser(User user);
 }
