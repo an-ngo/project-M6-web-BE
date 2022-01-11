@@ -33,10 +33,7 @@ public class SignUpForm {
     @Size(min = 6, max = 15)
     @Column(nullable = false)
     private String password;
-
     private String avatar;
-
-
     private String phone;
 
 

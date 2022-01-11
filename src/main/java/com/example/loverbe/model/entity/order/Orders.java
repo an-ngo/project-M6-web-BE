@@ -6,14 +6,15 @@ import com.example.loverbe.model.entity.user.User;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Entity
 @Data
 @AllArgsConstructor
 @RequiredArgsConstructor
-@Table(name = "order")
-public class Order {
+public class Orders {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,19 +23,21 @@ public class Order {
     private User user;
 
     @ManyToOne(targetEntity = NCCDV.class)
-    private NCCDV nccdv;
+    private NCCDV NCCDV;
 
     private String place;
 
     private String duration;
 
-    private String startTime;
+    private LocalDate startTime;
 
-    private String date;
+    private Date date;
 
     private Long money;
 
-    @ManyToMany(targetEntity = ServiceByNCCDV.class)
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "order_service_bynccdvlist",
+            joinColumns = {@JoinColumn(name = "order_id")}, inverseJoinColumns = {@JoinColumn(name = "service_bynccdv_list")})
     private List<ServiceByNCCDV> serviceByNCCDVList;
 
     private EnumOrder enumOrder;
