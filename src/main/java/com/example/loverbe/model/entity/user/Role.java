@@ -24,6 +24,4 @@ public class Role {
     @NaturalId
     @Column(length = 50)
     private EnumRoleName name;
-
-
 }

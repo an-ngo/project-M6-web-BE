@@ -62,9 +62,8 @@ public class User {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JsonBackReference
-    private List<NCCDV> nccdvList;
-
-    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "users_rooms",
+            joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "room_id")})
     private List<Room> roomList;
 
 

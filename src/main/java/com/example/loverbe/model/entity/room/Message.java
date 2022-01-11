@@ -1,9 +1,11 @@
 package com.example.loverbe.model.entity.room;
 
 import com.example.loverbe.model.entity.user.User;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -15,10 +17,12 @@ public class Message {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(targetEntity = User.class)
     private User user;
+    @ManyToOne(targetEntity = Room.class)
+    private Room room;
 
-    private String timeSend;
+    private LocalDate timeSend;
 
     private String message;
 }

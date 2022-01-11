@@ -1,5 +1,6 @@
 package com.example.loverbe.model.entity.room;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -16,6 +17,7 @@ public class Room {
 
     private String name;
 
-    @OneToMany
+    @OneToMany(mappedBy = "room")
+    @JsonBackReference
     private List<Message> messageList;
 }
