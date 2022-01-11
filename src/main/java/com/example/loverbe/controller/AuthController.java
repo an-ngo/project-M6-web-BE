@@ -64,22 +64,6 @@ public class AuthController {
             signUpForm.setAvatar("https://firebasestorage.googleapis.com/v0/b/lover-4a315.appspot.com/o/kisspng-computer-icons-avatar-social-media-blog-font-aweso-avatar-icon-5b2e99c4409623.4643918115297806762646.png?alt=media&token=8418fb57-0c41-4e1c-9c79-b28cc82e36ea");
         }
         User user = new User(signUpForm.getUsername(), signUpForm.getEmail(), passwordEncoder.encode(signUpForm.getPassword()), signUpForm.getAvatar());
-        Set<String> strRoles = signUpForm.getRoles();
-        Set<Role> roles = new HashSet<>();
-        strRoles.forEach(role -> {
-            switch (role) {
-                case "admin":
-                    Role adminRole = roleService.findByName(RoleName.ROLE_ADMIN).orElseThrow(
-                            () -> new RuntimeException("Role not found")
-                    );
-                    roles.add(adminRole);
-                    break;
-                default:
-                    Role userRole = roleService.findByName(RoleName.ROLE_USER).orElseThrow(() -> new RuntimeException("Role not found"));
-                    roles.add(userRole);
-            }
-        });
-        user.setRoles(roles);
         userService.save(user);
         return new ResponseEntity<>(new ResponseMessage("success"), HttpStatus.OK);
     }

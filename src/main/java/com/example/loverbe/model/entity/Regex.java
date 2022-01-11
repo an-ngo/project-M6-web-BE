@@ -1,5 +1,6 @@
 package com.example.loverbe.model.entity;
 
+
 public class Regex {
     public static final String USER_REGEX = "^[a-zA-Z0-9]+([a-zA-Z0-9]([_\\\\-])[a-zA-Z0-9])*[a-zA-Z0-9]+${4,}";
     public static final String PASSWORD_REGEX = "^(?:(?=.*\\d)(?=.*[A-Z])(?=.*[!@#$%^&*()_+]).*)[^\\s]{3,}$";
