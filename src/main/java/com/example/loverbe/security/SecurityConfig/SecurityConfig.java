@@ -1,8 +1,5 @@
 package com.example.loverbe.security.SecurityConfig;
 
-import com.example.loverbe.model.entity.Role;
-import com.example.loverbe.model.entity.RoleName;
-import com.example.loverbe.model.entity.User;
 import com.example.loverbe.security.jwt.JwtEntryPoint;
 import com.example.loverbe.security.jwt.JwtTokenFilter;
 import com.example.loverbe.service.IRoleService;
@@ -21,12 +18,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-
-import javax.annotation.PostConstruct;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 @Configuration
 @EnableWebSecurity
@@ -67,17 +58,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        if (roles.isEmpty()) {
 //            Role roleAdmin = new Role();
 //            roleAdmin.setId(1L);
-//            roleAdmin.setName(RoleName.ROLE_ADMIN);
+//            roleAdmin.setName(EnumRoleName.ROLE_ADMIN);
 //            roleService.save(roleAdmin);
 //            Role roleCoach = new Role();
 //            roleCoach.setId(2L);
-//            roleCoach.setName(RoleName.ROLE_USER);
+//            roleCoach.setName(EnumRoleName.ROLE_USER);
 //            roleService.save(roleCoach);
 //        }
 //        if (users.isEmpty()) {
 //            User admin = new User();
 //            Set<Role> roles1 = new HashSet<>();
-//            roles1.add(new Role(1L, RoleName.ROLE_USER));
+//            roles1.add(new Role(1L, EnumRoleName.ROLE_USER));
 //            admin.setUsername("admin");
 //            admin.setPassword(passwordEncoder.encode("Admin1@"));
 //            admin.setEmail("admin@gmail.com");

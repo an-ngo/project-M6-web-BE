@@ -1,6 +1,6 @@
 package com.example.loverbe.exception;
 
-import com.example.loverbe.model.entity.User;
+import com.example.loverbe.model.entity.user.User;
 import com.example.loverbe.repository.IUserRepository;
 
 import javax.validation.ConstraintValidator;

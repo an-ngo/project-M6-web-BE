@@ -1,5 +1,6 @@
 package com.example.loverbe.model.entity;
 
+import com.example.loverbe.model.entity.enums.EnumRoleName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,7 +23,7 @@ public class Role {
     @Enumerated(EnumType.STRING)
     @NaturalId
     @Column(length = 50)
-    private RoleName name;
+    private EnumRoleName name;
 
 
 }

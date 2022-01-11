@@ -1,6 +1,6 @@
 package com.example.loverbe.service.Implement;
 
-import com.example.loverbe.model.entity.User;
+import com.example.loverbe.model.entity.user.User;
 import com.example.loverbe.repository.IUserRepository;
 import com.example.loverbe.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,7 @@
 package com.example.loverbe.service.Implement;
 
 import com.example.loverbe.model.entity.Role;
-import com.example.loverbe.model.entity.RoleName;
+import com.example.loverbe.model.entity.enums.EnumRoleName;
 import com.example.loverbe.repository.IRoleRepository;
 import com.example.loverbe.service.IRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ public class RoleService implements IRoleService {
     private IRoleRepository roleRepository;
 
     @Override
-    public Optional<Role> findByName(RoleName name) {
+    public Optional<Role> findByName(EnumRoleName name) {
         return roleRepository.findByName(name);
     }
 

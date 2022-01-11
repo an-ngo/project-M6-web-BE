@@ -1,6 +1,6 @@
 package com.example.loverbe.service;
 
-import com.example.loverbe.model.entity.User;
+import com.example.loverbe.model.entity.user.User;
 
 import java.util.Optional;
 

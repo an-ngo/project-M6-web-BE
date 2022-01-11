@@ -1,16 +1,16 @@
-package com.example.loverbe.model.entity;
+package com.example.loverbe.model.entity.user;
 
+import com.example.loverbe.model.entity.Role;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -49,7 +49,6 @@ public class User {
     @Column(columnDefinition = "boolean default true")
     private boolean status;
     private String phone;
-    private String birthday;
     private String gender;
 
     @Lob
@@ -61,11 +60,15 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     Set<Role> roles;
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JsonBackReference
+    private List<NCCDV> nccdvList;
+
 
     public User(String username, String email, String encode, String avatar) {
         this.username = username;
         this.email = email;
-        this.password = encode;
+        this.password  = encode;
         this.avatar = avatar;
     }
 }

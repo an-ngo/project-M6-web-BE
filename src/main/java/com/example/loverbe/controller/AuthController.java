@@ -5,9 +5,7 @@ import com.example.loverbe.model.dto.request.SignInForm;
 import com.example.loverbe.model.dto.request.SignUpForm;
 import com.example.loverbe.model.dto.response.JwtResponse;
 import com.example.loverbe.model.dto.response.ResponseMessage;
-import com.example.loverbe.model.entity.Role;
-import com.example.loverbe.model.entity.RoleName;
-import com.example.loverbe.model.entity.User;
+import com.example.loverbe.model.entity.user.User;
 import com.example.loverbe.security.jwt.JwtProvider;
 import com.example.loverbe.security.userprincal.UserDetailSevices;
 import com.example.loverbe.security.userprincal.UserPrincipal;
@@ -24,8 +22,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.HashSet;
-import java.util.Set;
 
 @RestController
 @RequestMapping()
@@ -76,7 +72,7 @@ public class AuthController {
         String token = jwtProvider.createToken(authentication);
         UserPrincipal userPrinciple = (UserPrincipal) authentication.getPrincipal();
 //        Optional<User> currentUser = userService.findByUsername(signInForm.getUsername());
-        return ResponseEntity.ok(new JwtResponse(token, userPrinciple.getUsername(), userPrinciple.getAvatar(), userPrinciple.getAuthorities()));
+        return ResponseEntity.ok(new JwtResponse(token, userPrinciple.getUsername(), userPrinciple.getAvatar(), userPrinciple.getAuthorities(),userPrinciple.getPhone()));
     }
 
     @PutMapping("/change-avatar")
