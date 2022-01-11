@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -21,7 +22,7 @@ public class Message {
     @ManyToOne(targetEntity = Room.class)
     private Room room;
 
-    private String timeSend;
+    private LocalDate timeSend;
 
     private String message;
 }

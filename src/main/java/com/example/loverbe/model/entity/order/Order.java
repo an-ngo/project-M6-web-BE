@@ -6,6 +6,8 @@ import com.example.loverbe.model.entity.user.User;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -27,9 +29,9 @@ public class Order {
 
     private String duration;
 
-    private String startTime;
+    private LocalDate startTime;
 
-    private String date;
+    private Date date;
 
     private Long money;
 
