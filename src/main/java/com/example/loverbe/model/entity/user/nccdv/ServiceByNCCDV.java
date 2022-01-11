@@ -1,4 +1,4 @@
-package com.example.loverbe.model.entity;
+package com.example.loverbe.model.entity.user.nccdv;
 
 import lombok.*;
 
@@ -10,7 +10,7 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @Builder
 @RequiredArgsConstructor
-public class ServiceByUser {
+public class ServiceByNCCDV {
     @Id
     private Long id;
 

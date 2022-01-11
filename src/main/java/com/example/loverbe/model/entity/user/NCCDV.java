@@ -2,8 +2,9 @@ package com.example.loverbe.model.entity.user;
 
 import com.example.loverbe.model.entity.user.nccdv.Hobby;
 import com.example.loverbe.model.entity.user.nccdv.Image;
-import com.example.loverbe.model.entity.enums.EnumStatusNCCDV;
+import com.example.loverbe.model.enums.EnumStatusNCCDV;
 import lombok.*;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import javax.persistence.*;
 import java.util.List;
@@ -48,6 +49,6 @@ public class NCCDV {
 
     private EnumStatusNCCDV status;
 
-
+    private Long viewCount;
 
 }

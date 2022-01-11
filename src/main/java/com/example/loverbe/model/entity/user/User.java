@@ -1,6 +1,6 @@
 package com.example.loverbe.model.entity.user;
 
-import com.example.loverbe.model.entity.Role;
+import com.example.loverbe.model.entity.room.Room;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
@@ -63,6 +63,9 @@ public class User {
     @ManyToMany(fetch = FetchType.LAZY)
     @JsonBackReference
     private List<NCCDV> nccdvList;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    private List<Room> roomList;
 
 
     public User(String username, String email, String encode, String avatar) {

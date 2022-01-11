@@ -1,7 +1,7 @@
 package com.example.loverbe.service;
 
-import com.example.loverbe.model.entity.enums.EnumRoleName;
-import com.example.loverbe.model.entity.Role;
+import com.example.loverbe.model.enums.EnumRoleName;
+import com.example.loverbe.model.entity.user.Role;
 
 import java.util.Optional;
 

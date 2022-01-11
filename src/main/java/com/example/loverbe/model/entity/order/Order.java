@@ -1,20 +1,12 @@
 package com.example.loverbe.model.entity.order;
-import com.example.loverbe.model.entity.Role;
-import com.example.loverbe.model.entity.ServiceByUser;
-import com.example.loverbe.model.entity.enums.EnumOrder;
+import com.example.loverbe.model.entity.user.nccdv.ServiceByNCCDV;
+import com.example.loverbe.model.enums.EnumOrder;
 import com.example.loverbe.model.entity.user.NCCDV;
 import com.example.loverbe.model.entity.user.User;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Data
@@ -41,8 +33,8 @@ public class Order {
 
     private Long money;
 
-    @ManyToMany(targetEntity = ServiceByUser.class)
-    private List<ServiceByUser> serviceByUserList;
+    @ManyToMany(targetEntity = ServiceByNCCDV.class)
+    private List<ServiceByNCCDV> serviceByNCCDVList;
 
     private EnumOrder enumOrder;
 
