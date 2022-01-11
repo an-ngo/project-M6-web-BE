@@ -1,6 +1,6 @@
 package com.example.loverbe.model.entity.user;
 
-import com.example.loverbe.model.enums.EnumRoleName;
+import com.example.loverbe.enums.EnumRoleName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -2,9 +2,9 @@ package com.example.loverbe.model.entity.user;
 
 import com.example.loverbe.model.entity.user.nccdv.Hobby;
 import com.example.loverbe.model.entity.user.nccdv.Image;
-import com.example.loverbe.model.enums.EnumStatusNCCDV;
+import com.example.loverbe.enums.EnumStatusNCCDV;
+import com.example.loverbe.model.entity.user.nccdv.ServiceByNCCDV;
 import lombok.*;
-import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import javax.persistence.*;
 import java.util.List;
@@ -22,10 +22,14 @@ public class NCCDV {
     @OneToOne
     private User user;
 
-    private String yob;
+    private String yearOfBirth;
 
     private String city;
+
     private String country;
+
+    @ManyToMany(targetEntity = ServiceByNCCDV.class)
+    private List<ServiceByNCCDV> serviceByNCCDVList;
 
     @OneToMany(targetEntity = Image.class)
     private List<Image> imageList;

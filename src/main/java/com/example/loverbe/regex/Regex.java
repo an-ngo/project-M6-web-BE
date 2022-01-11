@@ -1,4 +1,4 @@
-package com.example.loverbe.model.entity;
+package com.example.loverbe.regex;
 
 
 public class Regex {

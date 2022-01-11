@@ -1,6 +1,6 @@
 package com.example.loverbe.model.entity.order;
 import com.example.loverbe.model.entity.user.nccdv.ServiceByNCCDV;
-import com.example.loverbe.model.enums.EnumOrder;
+import com.example.loverbe.enums.EnumOrder;
 import com.example.loverbe.model.entity.user.NCCDV;
 import com.example.loverbe.model.entity.user.User;
 import lombok.*;

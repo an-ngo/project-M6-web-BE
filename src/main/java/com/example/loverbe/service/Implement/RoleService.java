@@ -1,7 +1,7 @@
 package com.example.loverbe.service.Implement;
 
 import com.example.loverbe.model.entity.user.Role;
-import com.example.loverbe.model.enums.EnumRoleName;
+import com.example.loverbe.enums.EnumRoleName;
 import com.example.loverbe.repository.IRoleRepository;
 import com.example.loverbe.service.IRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
