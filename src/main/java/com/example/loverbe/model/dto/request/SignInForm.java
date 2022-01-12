@@ -12,6 +12,4 @@ import lombok.RequiredArgsConstructor;
 public class SignInForm {
     private String username;
     private String password;
-
-
 }

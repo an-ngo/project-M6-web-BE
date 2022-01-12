@@ -42,7 +42,7 @@ public class NCCDVRestController {
         return new ResponseEntity<>(nccdvService.save(nccdv), HttpStatus.CREATED);
     }
     @PutMapping
-    public ResponseEntity<NCCDV> edit(@RequestBody NCCDV NCCDV){
+    public ResponseEntity<NCCDV> edit(@RequestBody NCCDV nccdv){
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
                 .getPrincipal();
         String username = userDetails.getUsername();
@@ -54,7 +54,23 @@ public class NCCDVRestController {
         if (!currentNCCDV.isPresent()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-//        nccdv.setId(currentNCCDV.get().getId());
-        return new ResponseEntity<>(nccdvService.save(NCCDV), HttpStatus.ACCEPTED);
+        nccdv.setId(currentNCCDV.get().getId());
+        return new ResponseEntity<>(nccdvService.save(nccdv), HttpStatus.ACCEPTED);
+    }
+    @DeleteMapping
+    public ResponseEntity<?> delete(){
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
+        String username = userDetails.getUsername();
+        Optional<User> user = userService.findByUsername(username);
+        if (!user.isPresent()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        Optional<NCCDV> currentNCCDV = nccdvService.findByUser(user.get());
+        if (!currentNCCDV.isPresent()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        nccdvService.remove(currentNCCDV.get().getId());
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

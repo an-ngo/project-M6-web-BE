@@ -3,13 +3,13 @@ package com.example.loverbe.model.entity.user;
 import com.example.loverbe.model.entity.room.Room;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 import java.util.List;
 import java.util.Set;
 
@@ -30,21 +30,14 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    //        @NotBlank
-//        @Size(min = 3, max = 50)
     private String name;
-    @NotBlank
-    @Size(min = 3, max = 50)
+
     private String username;
+
     @NaturalId
-    @NotBlank
-    @Size(max = 50)
-    @Email
     private String email;
+
     @JsonIgnore
-    @NotBlank
-    @Size(min = 6, max = 100)
-    @Column(nullable = false)
     private String password;
     @Column(columnDefinition = "boolean default true")
     private boolean status;

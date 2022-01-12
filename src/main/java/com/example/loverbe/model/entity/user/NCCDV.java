@@ -31,21 +31,21 @@ public class NCCDV {
 
     private String country;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "nccdv_servicebynccdv",
-            joinColumns = {@JoinColumn(name = "nccdv_id")}, inverseJoinColumns = {@JoinColumn(name = "service_bynccdv_id")})
+    @ManyToMany(targetEntity = ServiceByNCCDV.class, mappedBy = "nccdvs", cascade = CascadeType.REMOVE)
+//    @JoinTable(name = "nccdv_servicebynccdv",
+//            joinColumns = {@JoinColumn(name = "nccdv_id")}, inverseJoinColumns = {@JoinColumn(name = "service_bynccdv_id")})
     private List<ServiceByNCCDV> serviceByNCCDVList;
 
-    @OneToMany(mappedBy = "nccdv")
+    @OneToMany(targetEntity = Image.class,mappedBy = "nccdv", cascade = CascadeType.REMOVE)
     private List<Image> imageList;
 
     private String height;
 
     private String weight;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "nccdv_hobby",
-            joinColumns = {@JoinColumn(name = "nccdv_id")}, inverseJoinColumns = {@JoinColumn(name = "hobby_id")})
+    @ManyToMany(targetEntity = Hobby.class, mappedBy = "nccdvs", cascade = CascadeType.REMOVE)
+//    @JoinTable(name = "nccdv_hobby",
+//            joinColumns = {@JoinColumn(name = "nccdv_id")}, inverseJoinColumns = {@JoinColumn(name = "hobby_id")})
     private List<Hobby> hobbyList;
 
     private String description;
