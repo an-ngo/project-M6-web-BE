@@ -4,9 +4,10 @@ import com.example.loverbe.model.entity.room.Message;
 import com.example.loverbe.repository.IMessageRepository;
 import com.example.loverbe.service.IMessageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-
+@Service
 public class MessageService implements IMessageService {
     @Autowired
     IMessageRepository messageRepository;

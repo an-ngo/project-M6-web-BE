@@ -1,12 +1,12 @@
 package com.example.loverbe.model.entity.room;
 
 import com.example.loverbe.model.entity.user.User;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
 
 @Entity
 @Data

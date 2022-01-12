@@ -19,7 +19,7 @@ public class Room {
 
     private String name;
 
-    @OneToMany(targetEntity = Message.class)
+    @OneToMany(targetEntity = Message.class,mappedBy = "room", cascade = CascadeType.REMOVE)
     @JsonBackReference
     @ToString.Exclude
     private List<Message> messageList;
