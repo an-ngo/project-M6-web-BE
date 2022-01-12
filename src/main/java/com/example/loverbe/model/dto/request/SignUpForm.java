@@ -38,7 +38,4 @@ public class SignUpForm {
 
     private String phone;
 
-
-
-
 }

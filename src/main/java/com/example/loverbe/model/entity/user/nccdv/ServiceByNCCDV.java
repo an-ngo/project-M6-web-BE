@@ -1,11 +1,11 @@
 package com.example.loverbe.model.entity.user.nccdv;
 
+import com.example.loverbe.model.entity.user.NCCDV;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
@@ -22,4 +22,8 @@ public class ServiceByNCCDV {
     private Boolean status;
 
     private Double price;
+
+    @JsonBackReference
+    @ManyToMany(targetEntity = NCCDV.class)
+    private List<NCCDV> nccdvs;
 }
