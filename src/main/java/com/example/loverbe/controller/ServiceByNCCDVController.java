@@ -40,6 +40,9 @@ public class ServiceByNCCDVController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         else
+            if(serviceByNCCDV.getId()==null){
+                serviceByNCCDV.setId(id);
+            }
             serviceByNCCDVService.save(serviceByNCCDV);
         return new ResponseEntity<>(service.get(),HttpStatus.OK);
     }
