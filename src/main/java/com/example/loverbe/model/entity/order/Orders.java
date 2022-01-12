@@ -1,7 +1,6 @@
 package com.example.loverbe.model.entity.order;
 import com.example.loverbe.model.entity.user.nccdv.ServiceByNCCDV;
 import com.example.loverbe.enums.EnumOrder;
-import com.example.loverbe.model.entity.user.NCCDV;
 import com.example.loverbe.model.entity.user.User;
 import lombok.*;
 
@@ -21,9 +20,6 @@ public class Orders {
 
     @ManyToOne(targetEntity = User.class)
     private User user;
-
-    @ManyToOne(targetEntity = NCCDV.class)
-    private NCCDV NCCDV;
 
     private String place;
 

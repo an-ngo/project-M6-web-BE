@@ -1,6 +1,6 @@
 package com.example.loverbe.model.entity.user.nccdv;
 
-import com.example.loverbe.model.entity.user.NCCDV;
+import com.example.loverbe.model.entity.user.User;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
@@ -24,6 +24,6 @@ public class ServiceByNCCDV {
     private Double price;
 
     @JsonBackReference
-    @ManyToMany(targetEntity = NCCDV.class)
-    private List<NCCDV> nccdvs;
+    @ManyToMany(targetEntity = User.class)
+    private List<User> users;
 }

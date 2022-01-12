@@ -1,6 +1,10 @@
 package com.example.loverbe.model.entity.user;
 
+import com.example.loverbe.enums.EnumStatusNCCDV;
 import com.example.loverbe.model.entity.room.Room;
+import com.example.loverbe.model.entity.user.nccdv.Hobby;
+import com.example.loverbe.model.entity.user.nccdv.Image;
+import com.example.loverbe.model.entity.user.nccdv.ServiceByNCCDV;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
@@ -41,7 +45,9 @@ public class User {
     private String password;
     @Column(columnDefinition = "boolean default true")
     private boolean status;
+
     private String phone;
+
     private String gender;
 
     @Lob
@@ -53,11 +59,42 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     Set<Role> roles;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JsonBackReference
-    @JoinTable(name = "users_rooms",
-            joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "room_id")})
-    private List<Room> roomList;
+    private String yearOfBirth;
+
+    private String city;
+
+    private String country;
+
+    @ManyToMany(targetEntity = ServiceByNCCDV.class, mappedBy = "users", cascade = CascadeType.REMOVE)
+//    @JoinTable(name = "nccdv_servicebynccdv",
+//            joinColumns = {@JoinColumn(name = "nccdv_id")}, inverseJoinColumns = {@JoinColumn(name = "service_bynccdv_id")})
+    private List<ServiceByNCCDV> serviceByNCCDVList;
+
+    @OneToMany(targetEntity = Image.class,mappedBy = "user", cascade = CascadeType.REMOVE)
+    private List<Image> imageList;
+
+    private String height;
+
+    private String weight;
+
+    @ManyToMany(targetEntity = Hobby.class, mappedBy = "users", cascade = CascadeType.REMOVE)
+//    @JoinTable(name = "nccdv_hobby",
+//            joinColumns = {@JoinColumn(name = "nccdv_id")}, inverseJoinColumns = {@JoinColumn(name = "hobby_id")})
+    private List<Hobby> hobbyList;
+
+    private String description;
+
+    private String conditions;
+
+    private String link_facebook;
+
+    private String joinDate;
+
+    private Long countTime = 0L;
+
+    private EnumStatusNCCDV statusNCCDV;
+
+    private Long viewCount;
 
 
     public User(String username, String email, String encode, String avatar) {

@@ -1,6 +1,6 @@
 package com.example.loverbe.model.entity.user.nccdv;
 
-import com.example.loverbe.model.entity.user.NCCDV;
+import com.example.loverbe.model.entity.user.User;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,6 +21,6 @@ public class Hobby {
     private String name;
 
     @JsonBackReference
-    @ManyToMany(targetEntity = NCCDV.class)
-    private List<NCCDV> nccdvs;
+    @ManyToMany(targetEntity = User.class)
+    private List<User> users;
 }

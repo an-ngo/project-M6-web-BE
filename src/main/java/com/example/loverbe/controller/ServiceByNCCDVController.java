@@ -1,6 +1,5 @@
 package com.example.loverbe.controller;
 
-import com.example.loverbe.model.entity.order.Orders;
 import com.example.loverbe.model.entity.user.nccdv.ServiceByNCCDV;
 import com.example.loverbe.service.IServiceByNCCDVService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +43,7 @@ public class ServiceByNCCDVController {
                 serviceByNCCDV.setId(id);
             }
             serviceByNCCDVService.save(serviceByNCCDV);
-        return new ResponseEntity<>(service.get(),HttpStatus.OK);
+        return new ResponseEntity<>(serviceByNCCDV,HttpStatus.OK);
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<ServiceByNCCDV>delete(@PathVariable Long id){

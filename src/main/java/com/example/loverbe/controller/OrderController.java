@@ -43,7 +43,7 @@ public class OrderController {
                 orders.setId(id);
             }
         orderService.save(orders);
-            return new ResponseEntity<>(orders1.get(),HttpStatus.OK);
+            return new ResponseEntity<>(orders,HttpStatus.OK);
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<Orders>delete(@PathVariable Long id){
