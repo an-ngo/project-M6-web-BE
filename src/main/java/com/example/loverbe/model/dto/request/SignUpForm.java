@@ -36,7 +36,4 @@ public class SignUpForm {
     private String avatar;
     private String phone;
 
-
-
-
 }
