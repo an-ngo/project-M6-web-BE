@@ -1,11 +1,14 @@
 package com.example.loverbe.controller;
 
+import com.example.loverbe.enums.EnumRoleName;
 import com.example.loverbe.model.dto.request.UserProviderForm;
 import com.example.loverbe.model.dto.response.ResponseMessage;
+import com.example.loverbe.model.entity.user.Role;
 import com.example.loverbe.model.entity.user.User;
 import com.example.loverbe.model.entity.user.nccdv.Image;
 import com.example.loverbe.model.entity.user.nccdv.ServiceByProvider;
 import com.example.loverbe.service.IImageService;
+import com.example.loverbe.service.IRoleService;
 import com.example.loverbe.service.IServiceByProviderService;
 import com.example.loverbe.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +18,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -30,6 +34,8 @@ public class ProviderRestController {
     private IImageService iImageService;
     @Autowired
     private IServiceByProviderService providerService;
+    @Autowired
+    private IRoleService roleService;
 
     @PutMapping
     public ResponseEntity<?> editUserProvider(@RequestBody UserProviderForm userProviderForm){
@@ -63,7 +69,7 @@ public class ProviderRestController {
         user.setConditions(userProviderForm.getConditions());
         user.setLink_facebook(userProviderForm.getLink_facebook());
         if (user.getJoinDate() == null){
-            user.setJoinDate(new Date(userProviderForm.getJoinDate()));
+            user.setJoinDate(new Date(String.valueOf(LocalDate.now())));
         }
         user.setIsStatusProvider(userProviderForm.getIsStatusProvider());
         List<String> images = userProviderForm.getImageList();
@@ -74,7 +80,22 @@ public class ProviderRestController {
         if (user.getViewCount() == null){
             user.setViewCount(0L);
         }
+        Optional<Role> role = roleService.findByName(EnumRoleName.ROLE_PROVIDER);
+        if (!role.isPresent()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        boolean checkRole = true;
+        for (Role currentRole : user.getRoles()){
+            if (currentRole.equals(role.get())){
+                checkRole = false;
+                break;
+            }
+        }
+        if (checkRole){
+            user.getRoles().add(role.get());
+        }
         userService.save(user);
         return new ResponseEntity<>(new ResponseMessage("Create success!"), HttpStatus.OK);
+
     }
 }

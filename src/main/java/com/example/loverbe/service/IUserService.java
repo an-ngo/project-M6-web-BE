@@ -14,4 +14,6 @@ public interface IUserService extends IGeneralService<User>{
     Boolean existsByEmail(String email); //email da co trong DB chua
     Page<User> findAllUser(Pageable pageable);
     Page<User> findAllServiceProvider(Pageable pageable);
+    Iterable<User> findTop6HotService();
+    Iterable<User> top6ProviderHot();
 }

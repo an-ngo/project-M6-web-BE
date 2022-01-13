@@ -77,4 +77,12 @@ public class UserRestController {
         userService.remove(currentUser.get().getId());
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+    @GetMapping("/top-6-service")
+    public ResponseEntity<Iterable<User>> getTop6Service(){
+        return new ResponseEntity<>(userService.findTop6HotService(), HttpStatus.OK);
+    }
+    @GetMapping("/top-6-provider-hot")
+    public ResponseEntity<Iterable<User>> getTop6ProviderHot(){
+        return new ResponseEntity<>(userService.top6ProviderHot(), HttpStatus.OK);
+    }
 }
