@@ -24,4 +24,8 @@ public class Role {
     @NaturalId
     @Column(length = 50)
     private EnumRoleName name;
+
+    public Role(long l) {
+        this.id=l;
+    }
 }
