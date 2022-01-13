@@ -1,21 +1,19 @@
 package com.example.loverbe.model.entity.user;
 
-import com.example.loverbe.enums.EnumStatusNCCDV;
-import com.example.loverbe.model.entity.room.Room;
 import com.example.loverbe.model.entity.user.nccdv.Hobby;
 import com.example.loverbe.model.entity.user.nccdv.Image;
-import com.example.loverbe.model.entity.user.nccdv.ServiceByNCCDV;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.example.loverbe.model.entity.user.nccdv.ServiceByProvider;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Data
@@ -44,7 +42,7 @@ public class User {
     @JsonIgnore
     private String password;
     @Column(columnDefinition = "boolean default true")
-    private boolean status;
+    private boolean isOnline;
 
     private String phone;
 
@@ -65,10 +63,11 @@ public class User {
 
     private String country;
 
-    @ManyToMany(targetEntity = ServiceByNCCDV.class, mappedBy = "users", cascade = CascadeType.REMOVE)
-//    @JoinTable(name = "nccdv_servicebynccdv",
-//            joinColumns = {@JoinColumn(name = "nccdv_id")}, inverseJoinColumns = {@JoinColumn(name = "service_bynccdv_id")})
-    private List<ServiceByNCCDV> serviceByNCCDVList;
+    @ManyToMany
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @JoinTable(name = "user_service_by_provider",
+            joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "service_by_provider_id")})
+    private List<ServiceByProvider> serviceByProviderList;
 
     @OneToMany(targetEntity = Image.class,mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Image> imageList;
@@ -77,9 +76,10 @@ public class User {
 
     private String weight;
 
-    @ManyToMany(targetEntity = Hobby.class, mappedBy = "users", cascade = CascadeType.REMOVE)
-//    @JoinTable(name = "nccdv_hobby",
-//            joinColumns = {@JoinColumn(name = "nccdv_id")}, inverseJoinColumns = {@JoinColumn(name = "hobby_id")})
+    @ManyToMany
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @JoinTable(name = "user_hobby",
+            joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "hobby_id")})
     private List<Hobby> hobbyList;
 
     private String description;
@@ -88,19 +88,21 @@ public class User {
 
     private String link_facebook;
 
-    private String joinDate;
+    private Date joinDate;
 
     private Long countTime = 0L;
 
-    private EnumStatusNCCDV statusNCCDV;
+    private String isStatusProvider;
 
     private Long viewCount;
 
 
-    public User(String username, String email, String encode, String avatar) {
+    public User(String username, String email, String encode, String avatar, String phone) {
         this.username = username;
         this.email = email;
         this.password  = encode;
         this.avatar = avatar;
+        this.phone = phone;
+        this.setRoles(new HashSet<>());
     }
 }

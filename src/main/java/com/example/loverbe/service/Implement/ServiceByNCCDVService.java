@@ -1,6 +1,6 @@
 package com.example.loverbe.service.Implement;
 
-import com.example.loverbe.model.entity.user.nccdv.ServiceByNCCDV;
+import com.example.loverbe.model.entity.user.nccdv.ServiceByProvider;
 import com.example.loverbe.repository.IServiceByNCCDVRepository;
 import com.example.loverbe.service.IServiceByNCCDVService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,18 +12,18 @@ public class ServiceByNCCDVService implements IServiceByNCCDVService {
     @Autowired
     private IServiceByNCCDVRepository serviceByNCCDVRepository;
     @Override
-    public Iterable<ServiceByNCCDV> findAll() {
+    public Iterable<ServiceByProvider> findAll() {
         return serviceByNCCDVRepository.findAll();
     }
 
     @Override
-    public Optional<ServiceByNCCDV> findById(Long id) {
+    public Optional<ServiceByProvider> findById(Long id) {
         return serviceByNCCDVRepository.findById(id);
     }
 
     @Override
-    public ServiceByNCCDV save(ServiceByNCCDV serviceByNCCDV) {
-        return serviceByNCCDVRepository.save(serviceByNCCDV);
+    public ServiceByProvider save(ServiceByProvider serviceByProvider) {
+        return serviceByNCCDVRepository.save(serviceByProvider);
     }
 
     @Override

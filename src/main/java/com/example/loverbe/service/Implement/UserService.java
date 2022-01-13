@@ -4,6 +4,8 @@ import com.example.loverbe.model.entity.user.User;
 import com.example.loverbe.repository.IUserRepository;
 import com.example.loverbe.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -35,7 +37,7 @@ public class UserService implements IUserService {
 
     @Override
     public void remove(Long id) {
-
+        userRepository.deleteById(id);
     }
 
 
@@ -52,5 +54,15 @@ public class UserService implements IUserService {
     @Override
     public Boolean existsByEmail(String email) {
         return userRepository.existsByEmail(email);
+    }
+
+    @Override
+    public Page<User> findAllUser(Pageable pageable) {
+        return userRepository.findAll(pageable);
+    }
+
+    @Override
+    public Page<User> findAllServiceProvider(Pageable pageable) {
+        return userRepository.findAllServiceProvider(pageable);
     }
 }

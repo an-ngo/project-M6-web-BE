@@ -5,6 +5,7 @@ import com.example.loverbe.model.dto.request.SignInForm;
 import com.example.loverbe.model.dto.request.SignUpForm;
 import com.example.loverbe.model.dto.response.JwtResponse;
 import com.example.loverbe.model.dto.response.ResponseMessage;
+import com.example.loverbe.model.entity.user.Role;
 import com.example.loverbe.model.entity.user.User;
 import com.example.loverbe.security.jwt.JwtProvider;
 import com.example.loverbe.security.userprincal.UserDetailSevices;
@@ -59,7 +60,8 @@ public class AuthController {
         if (signUpForm.getAvatar() == null || signUpForm.getAvatar().trim().isEmpty()) {
             signUpForm.setAvatar("https://firebasestorage.googleapis.com/v0/b/lover-4a315.appspot.com/o/kisspng-computer-icons-avatar-social-media-blog-font-aweso-avatar-icon-5b2e99c4409623.4643918115297806762646.png?alt=media&token=8418fb57-0c41-4e1c-9c79-b28cc82e36ea");
         }
-        User user = new User(signUpForm.getUsername(), signUpForm.getEmail(), passwordEncoder.encode(signUpForm.getPassword()), signUpForm.getAvatar());
+        User user = new User(signUpForm.getUsername(), signUpForm.getEmail(), passwordEncoder.encode(signUpForm.getPassword()), signUpForm.getAvatar(), signUpForm.getPhone());
+        user.getRoles().add(new Role(2L));
         userService.save(user);
         return new ResponseEntity<>(new ResponseMessage("success"), HttpStatus.OK);
     }

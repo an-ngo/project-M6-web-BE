@@ -1,6 +1,6 @@
 package com.example.loverbe.enums;
 
-public enum EnumStatusNCCDV {
+public enum EnumStatusProvider {
     DISABLE,
     ACTIVE,
     BUSY

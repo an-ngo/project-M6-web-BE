@@ -1,7 +1,6 @@
 package com.example.loverbe.service;
 
-import com.example.loverbe.model.entity.user.nccdv.ServiceByNCCDV;
-import com.example.loverbe.service.Implement.ServiceByNCCDVService;
+import com.example.loverbe.model.entity.user.nccdv.ServiceByProvider;
 
-public interface IServiceByNCCDVService extends IGeneralService<ServiceByNCCDV>{
+public interface IServiceByNCCDVService extends IGeneralService<ServiceByProvider>{
 }

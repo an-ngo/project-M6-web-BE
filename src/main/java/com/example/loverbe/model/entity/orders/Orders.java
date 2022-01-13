@@ -1,8 +1,10 @@
-package com.example.loverbe.model.entity.order;
-import com.example.loverbe.model.entity.user.nccdv.ServiceByNCCDV;
+package com.example.loverbe.model.entity.orders;
+import com.example.loverbe.model.entity.user.nccdv.ServiceByProvider;
 import com.example.loverbe.enums.EnumOrder;
 import com.example.loverbe.model.entity.user.User;
 import lombok.*;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -31,10 +33,11 @@ public class Orders {
 
     private Long money;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "order_service_bynccdvlist",
-            joinColumns = {@JoinColumn(name = "order_id")}, inverseJoinColumns = {@JoinColumn(name = "service_bynccdv_list")})
-    private List<ServiceByNCCDV> serviceByNCCDVList;
+    @ManyToMany
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @JoinTable(name = "order_service_by_provider",
+            joinColumns = {@JoinColumn(name = "orders_id")}, inverseJoinColumns = {@JoinColumn(name = "service_by_provider_id")})
+    private List<ServiceByProvider> serviceByProviderList;
 
     private EnumOrder enumOrder;
 
