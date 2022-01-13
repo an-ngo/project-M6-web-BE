@@ -11,7 +11,7 @@ import java.util.Optional;
 @Service
 public class OrderService implements IOrdersService {
     @Autowired
-    IOrdersRepository orderRepository;
+    private IOrdersRepository orderRepository;
     @Override
     public Iterable<Orders> findAll() {
         return orderRepository.findAll();
@@ -29,9 +29,8 @@ public class OrderService implements IOrdersService {
 
     @Override
     public void remove(Long id) {
-orderRepository.deleteById(id);
+        orderRepository.deleteById(id);
     }
-
 
     @Override
     public Iterable<Orders> findAllByUserAndStatusOrder(User user, String statusOrder) {
@@ -41,5 +40,15 @@ orderRepository.deleteById(id);
     @Override
     public Iterable<Orders> findAllByUserProviderAndStatusOrder(User userProvider, String statusOrder) {
         return orderRepository.findAllByUserProviderAndStatusOrder(userProvider, statusOrder);
+    }
+
+    @Override
+    public Iterable<Orders> findAllByUser(User user) {
+        return orderRepository.findAllByUser(user);
+    }
+
+    @Override
+    public Iterable<Orders> findAllByUserProvider(User user) {
+        return orderRepository.findAllByUserProvider(user);
     }
 }

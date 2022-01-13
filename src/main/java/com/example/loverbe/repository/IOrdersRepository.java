@@ -8,8 +8,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface IOrdersRepository extends JpaRepository<Orders, Long> {
-//    @Query(value = "select * from orders where user_provider_id = ? and enum_order = ? order by start_time;", nativeQuery = true)
-//    Iterable<Orders> findAllStatus(Long id ,String status);
     Iterable<Orders> findAllByUserAndStatusOrder(User user, String statusOrder);
     Iterable<Orders> findAllByUserProviderAndStatusOrder(User userProvider, String statusOrder);
+    Iterable<Orders> findAllByUser(User user);
+    Iterable<Orders> findAllByUserProvider(User user);
 }

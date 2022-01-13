@@ -1,6 +1,6 @@
 package com.example.loverbe.model.entity.orders;
-import com.example.loverbe.model.entity.user.nccdv.ServiceByProvider;
 import com.example.loverbe.enums.EnumOrder;
+import com.example.loverbe.model.entity.user.nccdv.ServiceByProvider;
 import com.example.loverbe.model.entity.user.User;
 import lombok.*;
 import org.hibernate.annotations.LazyCollection;
@@ -28,13 +28,13 @@ public class Orders {
 
     private String place;
 
-    private String duration;
+    private Long duration;
 
     private LocalDate startTime;
 
     private Date date;
 
-    private Long money;
+    private Double money;
 
     @ManyToMany
     @LazyCollection(LazyCollectionOption.FALSE)
