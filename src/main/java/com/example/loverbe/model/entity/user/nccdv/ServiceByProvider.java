@@ -20,4 +20,13 @@ public class ServiceByProvider {
     private String name;
 
     private Double price;
+
+    @JsonBackReference
+    @ManyToOne(targetEntity = User.class)
+    private User user;
+
+    public ServiceByProvider(String name, Double price) {
+        this.name = name;
+        this.price = price;
+    }
 }

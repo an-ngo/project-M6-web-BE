@@ -23,6 +23,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @RestController
 @RequestMapping()
@@ -73,7 +74,9 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String token = jwtProvider.createToken(authentication);
         UserPrincipal userPrinciple = (UserPrincipal) authentication.getPrincipal();
-//        Optional<User> currentUser = userService.findByUsername(signInForm.getUsername());
+        Optional<User> currentUser = userService.findByUsername(signInForm.getUsername());
+        currentUser.get().setOnline(true);
+        userService.save(currentUser.get());
         return ResponseEntity.ok(new JwtResponse(token, userPrinciple.getUsername(), userPrinciple.getAvatar(), userPrinciple.getAuthorities(),userPrinciple.getPhone()));
     }
 

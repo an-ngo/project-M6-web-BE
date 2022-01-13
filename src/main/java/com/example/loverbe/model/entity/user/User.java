@@ -63,10 +63,7 @@ public class User {
 
     private String country;
 
-    @ManyToMany
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @JoinTable(name = "user_service_by_provider",
-            joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "service_by_provider_id")})
+    @OneToMany(mappedBy = "user")
     private List<ServiceByProvider> serviceByProviderList;
 
     @OneToMany(targetEntity = Image.class,mappedBy = "user", cascade = CascadeType.REMOVE)

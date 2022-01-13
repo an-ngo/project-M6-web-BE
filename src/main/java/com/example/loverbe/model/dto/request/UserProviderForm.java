@@ -20,7 +20,7 @@ public class UserProviderForm {
 
     private String country;
 
-    private List<ServiceByProvider> serviceByProviderList;
+    private List<String> serviceByProviderList;
 
     private List<String> imageList;
 

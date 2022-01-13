@@ -1,7 +1,7 @@
 package com.example.loverbe.controller;
 
 import com.example.loverbe.model.entity.user.nccdv.ServiceByProvider;
-import com.example.loverbe.service.IServiceByNCCDVService;
+import com.example.loverbe.service.IServiceByProviderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,14 +14,14 @@ import java.util.Optional;
 @RequestMapping("/serviceByProvider")
 public class ServiceByProviderRestController {
     @Autowired
-    IServiceByNCCDVService serviceByNCCDVService;
+    IServiceByProviderService serviceByProviderService;
     @GetMapping
     public ResponseEntity<Iterable<ServiceByProvider>>showAll(){
-        return new ResponseEntity<>(serviceByNCCDVService.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(serviceByProviderService.findAll(), HttpStatus.OK);
     }
     @GetMapping("/{id}")
     public ResponseEntity<ServiceByProvider>showById(@PathVariable Long id, @RequestBody ServiceByProvider serviceByProvider){
-       Optional<ServiceByProvider> service = serviceByNCCDVService.findById(id);
+       Optional<ServiceByProvider> service = serviceByProviderService.findById(id);
        if (!service.isPresent()){
            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
        }
@@ -30,11 +30,11 @@ public class ServiceByProviderRestController {
     }
     @PostMapping
     public ResponseEntity<ServiceByProvider>create(@RequestBody ServiceByProvider serviceByProvider){
-        return new ResponseEntity<>(serviceByNCCDVService.save(serviceByProvider),HttpStatus.OK);
+        return new ResponseEntity<>(serviceByProviderService.save(serviceByProvider),HttpStatus.OK);
     }
     @PutMapping("/{id}")
     public ResponseEntity<ServiceByProvider>edit(@PathVariable Long id, @RequestBody ServiceByProvider serviceByProvider){
-        Optional<ServiceByProvider>service = serviceByNCCDVService.findById(id);
+        Optional<ServiceByProvider>service = serviceByProviderService.findById(id);
         if (!service.isPresent()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -42,16 +42,16 @@ public class ServiceByProviderRestController {
             if(serviceByProvider.getId()==null){
                 serviceByProvider.setId(id);
             }
-            serviceByNCCDVService.save(serviceByProvider);
+            serviceByProviderService.save(serviceByProvider);
         return new ResponseEntity<>(serviceByProvider,HttpStatus.OK);
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<ServiceByProvider>delete(@PathVariable Long id){
-        Optional<ServiceByProvider> service = serviceByNCCDVService.findById(id);
+        Optional<ServiceByProvider> service = serviceByProviderService.findById(id);
         if (!service.isPresent()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }else
-            serviceByNCCDVService.remove(id);
+            serviceByProviderService.remove(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

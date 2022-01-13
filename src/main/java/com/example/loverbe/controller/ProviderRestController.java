@@ -3,7 +3,9 @@ package com.example.loverbe.controller;
 import com.example.loverbe.model.dto.request.UserProviderForm;
 import com.example.loverbe.model.entity.user.User;
 import com.example.loverbe.model.entity.user.nccdv.Image;
+import com.example.loverbe.model.entity.user.nccdv.ServiceByProvider;
 import com.example.loverbe.service.IImageService;
+import com.example.loverbe.service.IServiceByProviderService;
 import com.example.loverbe.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,6 +27,8 @@ public class ProviderRestController {
     private IUserService userService;
     @Autowired
     private IImageService iImageService;
+    @Autowired
+    private IServiceByProviderService providerService;
 
     @PutMapping
     public ResponseEntity<User> editUserProvider(@RequestBody UserProviderForm userProviderForm){
@@ -39,7 +43,11 @@ public class ProviderRestController {
         user.setYearOfBirth(userProviderForm.getYearOfBirth());
         user.setCity(userProviderForm.getCity());
         user.setCountry(userProviderForm.getCountry());
-        user.setServiceByProviderList(userProviderForm.getServiceByProviderList());
+        List<String> serviceByProvider = userProviderForm.getServiceByProviderList();
+        for (int i = 0; i < serviceByProvider.size(); i++){
+            ServiceByProvider service = providerService.save(new ServiceByProvider(serviceByProvider.get(i), 0D));
+            user.getServiceByProviderList().add(service);
+        }
         user.setHeight(userProviderForm.getHeight());
         user.setWeight(userProviderForm.getWeight());
         user.setHobbyList(userProviderForm.getHobbyList());

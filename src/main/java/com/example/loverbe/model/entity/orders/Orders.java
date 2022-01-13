@@ -21,6 +21,9 @@ public class Orders {
     private Long id;
 
     @ManyToOne(targetEntity = User.class)
+    private User userProvider;
+
+    @ManyToOne(targetEntity = User.class)
     private User user;
 
     private String place;
