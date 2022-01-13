@@ -21,6 +21,10 @@ public class SignUpForm {
 //    @Pattern(regexp = Regex.USER_REGEX, message = Regex.USERNAME_MESSAGE)
     @NotBlank
     @Size(min = 3, max = 15)
+    private String name;
+
+    @NotBlank
+    @Size(min = 3, max = 15)
     private String username;
 //    @UniqueEmail
 //    @Pattern(regexp = Regex.EMAIL_REGEX, message = Regex.EMAIL_MESSAGE)
