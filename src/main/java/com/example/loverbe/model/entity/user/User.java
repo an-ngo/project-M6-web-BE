@@ -1,11 +1,9 @@
 package com.example.loverbe.model.entity.user;
 
 import com.example.loverbe.enums.EnumStatusNCCDV;
-import com.example.loverbe.model.entity.room.Room;
 import com.example.loverbe.model.entity.user.nccdv.Hobby;
 import com.example.loverbe.model.entity.user.nccdv.Image;
 import com.example.loverbe.model.entity.user.nccdv.ServiceByNCCDV;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -100,6 +98,15 @@ public class User {
     public User(String username, String email, String encode, String avatar) {
         this.username = username;
         this.email = email;
+        this.password  = encode;
+        this.avatar = avatar;
+    }
+
+    public User(String name, String username, String email, String phone, String encode, String avatar) {
+        this.name = name;
+        this.username = username;
+        this.email = email;
+        this.phone = phone;
         this.password  = encode;
         this.avatar = avatar;
     }

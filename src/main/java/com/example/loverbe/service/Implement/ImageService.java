@@ -12,6 +12,7 @@ import java.util.Optional;
 public class ImageService implements IImageService {
     @Autowired
     private IImageRepository iImageRepository;
+
     @Override
     public Iterable<Image> findAll() {
         return iImageRepository.findAll();
@@ -36,4 +37,5 @@ public class ImageService implements IImageService {
     public Iterable<Image> findAllByUserId(Long id) {
         return iImageRepository.findAllByUserId(id);
     }
+
 }
