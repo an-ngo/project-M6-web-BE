@@ -1,6 +1,7 @@
 package com.example.loverbe.controller;
 
 import com.example.loverbe.model.dto.request.UserProviderForm;
+import com.example.loverbe.model.dto.response.ResponseMessage;
 import com.example.loverbe.model.entity.user.User;
 import com.example.loverbe.model.entity.user.nccdv.Image;
 import com.example.loverbe.model.entity.user.nccdv.ServiceByProvider;
@@ -31,9 +32,8 @@ public class ProviderRestController {
     private IServiceByProviderService providerService;
 
     @PutMapping
-    public ResponseEntity<User> editUserProvider(@RequestBody UserProviderForm userProviderForm){
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
-                .getPrincipal();
+    public ResponseEntity<?> editUserProvider(@RequestBody UserProviderForm userProviderForm){
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = userDetails.getUsername();
         Optional<User> currentUser = userService.findByUsername(username);
         if (!currentUser.isPresent()){
@@ -45,8 +45,16 @@ public class ProviderRestController {
         user.setCountry(userProviderForm.getCountry());
         List<String> serviceByProvider = userProviderForm.getServiceByProviderList();
         for (int i = 0; i < serviceByProvider.size(); i++){
-            ServiceByProvider service = providerService.save(new ServiceByProvider(serviceByProvider.get(i), 0D, user));
-            user.getServiceByProviderList().add(service);
+            boolean check = true;
+            for (ServiceByProvider service: user.getServiceByProviderList()){
+                if (service.getName().equals(serviceByProvider.get(i))){
+                    check = false;
+                }
+            }
+            if (check){
+                ServiceByProvider service = providerService.save(new ServiceByProvider(serviceByProvider.get(i), 0D, user));
+                user.getServiceByProviderList().add(service);
+            }
         }
         user.setHeight(userProviderForm.getHeight());
         user.setWeight(userProviderForm.getWeight());
@@ -66,6 +74,7 @@ public class ProviderRestController {
         if (user.getViewCount() == null){
             user.setViewCount(0L);
         }
-        return new ResponseEntity<>(userService.save(user), HttpStatus.ACCEPTED);
+        userService.save(user);
+        return new ResponseEntity<>(new ResponseMessage("Create success!"), HttpStatus.OK);
     }
 }
