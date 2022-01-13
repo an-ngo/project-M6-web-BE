@@ -63,4 +63,14 @@ public class UserService implements IUserService {
     public Page<User> findAllServiceProvider(Pageable pageable) {
         return userRepository.findAllServiceProvider(pageable);
     }
+
+    @Override
+    public Iterable<User> findTop6HotService() {
+        return userRepository.findTop6HotService();
+    }
+
+    @Override
+    public Iterable<User> top6ProviderHot() {
+        return userRepository.top6ProviderHot();
+    }
 }

@@ -1,10 +1,13 @@
 package com.example.loverbe.controller;
 
+import com.example.loverbe.enums.EnumRoleName;
 import com.example.loverbe.model.dto.request.UserProviderForm;
+import com.example.loverbe.model.entity.user.Role;
 import com.example.loverbe.model.entity.user.User;
 import com.example.loverbe.model.entity.user.nccdv.Image;
 import com.example.loverbe.model.entity.user.nccdv.ServiceByProvider;
 import com.example.loverbe.service.IImageService;
+import com.example.loverbe.service.IRoleService;
 import com.example.loverbe.service.IServiceByProviderService;
 import com.example.loverbe.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +32,8 @@ public class ProviderRestController {
     private IImageService iImageService;
     @Autowired
     private IServiceByProviderService providerService;
+    @Autowired
+    private IRoleService roleService;
 
     @PutMapping
     public ResponseEntity<User> editUserProvider(@RequestBody UserProviderForm userProviderForm){
@@ -65,6 +70,20 @@ public class ProviderRestController {
         }
         if (user.getViewCount() == null){
             user.setViewCount(0L);
+        }
+        Optional<Role> role = roleService.findByName(EnumRoleName.ROLE_PROVIDER);
+        if (!role.isPresent()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        boolean checkRole = true;
+        for (Role currentRole : user.getRoles()){
+            if (currentRole.equals(role.get())){
+                checkRole = false;
+                break;
+            }
+        }
+        if (checkRole){
+            user.getRoles().add(role.get());
         }
         return new ResponseEntity<>(userService.save(user), HttpStatus.ACCEPTED);
     }
