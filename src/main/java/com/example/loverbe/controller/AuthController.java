@@ -5,10 +5,7 @@ import com.example.loverbe.model.dto.request.SignInForm;
 import com.example.loverbe.model.dto.request.SignUpForm;
 import com.example.loverbe.model.dto.response.JwtResponse;
 import com.example.loverbe.model.dto.response.ResponseMessage;
-<<<<<<< HEAD
-=======
 import com.example.loverbe.model.email.MailObject;
->>>>>>> send-email
 import com.example.loverbe.model.entity.user.Role;
 import com.example.loverbe.model.entity.user.User;
 import com.example.loverbe.security.jwt.JwtProvider;
