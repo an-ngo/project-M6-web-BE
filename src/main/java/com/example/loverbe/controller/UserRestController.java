@@ -13,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -84,5 +85,22 @@ public class UserRestController {
     @GetMapping("/top-6-provider-hot")
     public ResponseEntity<Iterable<User>> getTop6ProviderHot(){
         return new ResponseEntity<>(userService.top6ProviderHot(), HttpStatus.OK);
+    }
+    @GetMapping("/find-top12-counttime")
+    public ResponseEntity<List<User>> getTop12ByCountTime(){
+        List<User> manUsers = (List<User>) userService.find4MenUserTopCountTime();
+        List<User> maleUsers = (List<User>) userService.find8MaleUserTopCountTime();
+        for (User user: manUsers){
+            maleUsers.add(user);
+        }
+        return new ResponseEntity<>(maleUsers, HttpStatus.OK);
+    }
+    @GetMapping("/find-top12-joindate")
+    public ResponseEntity<Iterable<User>> getTop12JoinDate(){
+        return new ResponseEntity<>(userService.find12TopJoinDate(), HttpStatus.OK);
+    }
+    @GetMapping("/find-top6-viewpage")
+    public ResponseEntity<Iterable<User>> getTop6ViewPage(){
+        return new ResponseEntity<>(userService.find6TopViewPage(), HttpStatus.OK);
     }
 }

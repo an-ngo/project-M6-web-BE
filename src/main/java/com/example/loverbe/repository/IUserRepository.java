@@ -21,4 +21,12 @@ public interface IUserRepository extends JpaRepository<User, Long> {
     Iterable<User> findTop6HotService();
     @Query(value = "select * from users order by count_time DESC limit 6", nativeQuery = true)
     Iterable<User> top6ProviderHot();
+    @Query(value = "select * from users where gender='Nam' order by count_time DESC limit 4", nativeQuery = true)
+    Iterable<User> find4MenUserTopCountTime();
+    @Query(value = "select * from users where gender='Nu' order by count_time DESC limit 8", nativeQuery = true)
+    Iterable<User> find8MaleUserTopCountTime();
+    @Query(value = "select * from users order by join_date DESC limit 12", nativeQuery = true)
+    Iterable<User> find12TopJoinDate();
+    @Query(value = "select * from users order by view_count DESC limit 6", nativeQuery = true)
+    Iterable<User> find6TopViewPage();
 }

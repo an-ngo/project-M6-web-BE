@@ -17,6 +17,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -60,7 +61,7 @@ public class ProviderRestController {
         user.setConditions(userProviderForm.getConditions());
         user.setLink_facebook(userProviderForm.getLink_facebook());
         if (user.getJoinDate() == null){
-            user.setJoinDate(new Date(userProviderForm.getJoinDate()));
+            user.setJoinDate(new Date(String.valueOf(LocalDate.now())));
         }
         user.setIsStatusProvider(userProviderForm.getIsStatusProvider());
         List<String> images = userProviderForm.getImageList();
@@ -86,5 +87,17 @@ public class ProviderRestController {
             user.getRoles().add(role.get());
         }
         return new ResponseEntity<>(userService.save(user), HttpStatus.ACCEPTED);
+    }
+    @PutMapping("/{status}")
+    public ResponseEntity<User> changeStatusProvider(@PathVariable String status){
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
+        String username = userDetails.getUsername();
+        Optional<User> currentUser = userService.findByUsername(username);
+        if (!currentUser.isPresent()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        currentUser.get().setIsStatusProvider(status);
+        return new ResponseEntity<>(userService.save(currentUser.get()), HttpStatus.ACCEPTED);
     }
 }

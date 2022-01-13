@@ -36,7 +36,5 @@ public class UserProviderForm {
 
     private String link_facebook;
 
-    private String joinDate;
-
     private String isStatusProvider;
 }

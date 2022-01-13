@@ -16,4 +16,8 @@ public interface IUserService extends IGeneralService<User>{
     Page<User> findAllServiceProvider(Pageable pageable);
     Iterable<User> findTop6HotService();
     Iterable<User> top6ProviderHot();
+    Iterable<User> find4MenUserTopCountTime();
+    Iterable<User> find8MaleUserTopCountTime();
+    Iterable<User> find12TopJoinDate();
+    Iterable<User> find6TopViewPage();
 }

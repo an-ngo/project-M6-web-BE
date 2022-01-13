@@ -73,4 +73,24 @@ public class UserService implements IUserService {
     public Iterable<User> top6ProviderHot() {
         return userRepository.top6ProviderHot();
     }
+
+    @Override
+    public Iterable<User> find4MenUserTopCountTime() {
+        return userRepository.find4MenUserTopCountTime();
+    }
+
+    @Override
+    public Iterable<User> find8MaleUserTopCountTime() {
+        return userRepository.find8MaleUserTopCountTime();
+    }
+
+    @Override
+    public Iterable<User> find12TopJoinDate() {
+        return userRepository.find12TopJoinDate();
+    }
+
+    @Override
+    public Iterable<User> find6TopViewPage() {
+        return userRepository.find6TopViewPage();
+    }
 }
