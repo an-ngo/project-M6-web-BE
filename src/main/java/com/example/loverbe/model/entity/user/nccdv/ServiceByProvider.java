@@ -12,18 +12,22 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @RequiredArgsConstructor
-public class ServiceByNCCDV {
+public class ServiceByProvider {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
 
-    private Boolean status;
-
     private Double price;
 
     @JsonBackReference
-    @ManyToMany(targetEntity = User.class)
-    private List<User> users;
+    @ManyToOne(targetEntity = User.class)
+    private User user;
+
+    public ServiceByProvider(String name, Double price, User user) {
+        this.name = name;
+        this.price = price;
+        this.user = user;
+    }
 }

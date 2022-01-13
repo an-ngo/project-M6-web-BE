@@ -39,5 +39,4 @@ public class SignUpForm {
     private String password;
     private String avatar;
     private String phone;
-
 }

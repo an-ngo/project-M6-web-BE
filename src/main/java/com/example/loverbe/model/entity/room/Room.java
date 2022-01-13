@@ -23,5 +23,4 @@ public class Room {
     @JsonBackReference
     @ToString.Exclude
     private List<Message> messageList;
-
 }

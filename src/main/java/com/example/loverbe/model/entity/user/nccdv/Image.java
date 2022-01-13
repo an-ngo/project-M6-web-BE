@@ -23,4 +23,10 @@ public class Image {
     @JsonBackReference
     @ManyToOne(targetEntity = User.class)
     private User user;
+
+
+    public Image(String link_image, User user) {
+        this.link_image = link_image;
+        this.user = user;
+    }
 }

@@ -5,10 +5,13 @@ import com.example.loverbe.model.dto.request.SignInForm;
 import com.example.loverbe.model.dto.request.SignUpForm;
 import com.example.loverbe.model.dto.response.JwtResponse;
 import com.example.loverbe.model.dto.response.ResponseMessage;
+import com.example.loverbe.model.email.MailObject;
+import com.example.loverbe.model.entity.user.Role;
 import com.example.loverbe.model.entity.user.User;
 import com.example.loverbe.security.jwt.JwtProvider;
 import com.example.loverbe.security.userprincal.UserDetailSevices;
 import com.example.loverbe.security.userprincal.UserPrincipal;
+import com.example.loverbe.service.IEmailService;
 import com.example.loverbe.service.IRoleService;
 import com.example.loverbe.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +25,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Optional;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping()
@@ -39,6 +45,20 @@ public class AuthController {
     AuthenticationManager authenticationManager;
     @Autowired
     UserDetailSevices userDetailSevices;
+    @Autowired
+    public IEmailService emailService;
+
+    private static final Map<String, Map<String, String>> labels;
+
+    static {
+        labels = new HashMap<>();
+        //Simple email
+        Map<String, String> props = new HashMap<>();
+        props.put("headerText", "Send Simple Email");
+        props.put("messageLabel", "Message");
+        props.put("additionalInfo", "");
+        labels.put("send", props);
+    }
 
     @GetMapping("/listRole")
     public ResponseEntity<?> listRole() {
@@ -47,8 +67,7 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> register(@Valid @RequestBody SignUpForm signUpForm) throws Exception {
-//        if (!signUpForm.getPassword().equals(signUpForm.getRePassword())){
-//            throw new RePasswordNotCorrectException();
+
 //        }
         if (userService.existsByUsername(signUpForm.getUsername())) {
             return new ResponseEntity<>(new ResponseMessage("no_user"), HttpStatus.OK);
@@ -59,7 +78,11 @@ public class AuthController {
         if (signUpForm.getAvatar() == null || signUpForm.getAvatar().trim().isEmpty()) {
             signUpForm.setAvatar("https://firebasestorage.googleapis.com/v0/b/lover-4a315.appspot.com/o/kisspng-computer-icons-avatar-social-media-blog-font-aweso-avatar-icon-5b2e99c4409623.4643918115297806762646.png?alt=media&token=8418fb57-0c41-4e1c-9c79-b28cc82e36ea");
         }
-        User user = new User(signUpForm.getName(),signUpForm.getUsername(), signUpForm.getEmail(), signUpForm.getPhone(),passwordEncoder.encode(signUpForm.getPassword()), signUpForm.getAvatar());
+
+        User user = new User(signUpForm.getUsername(), signUpForm.getEmail(), passwordEncoder.encode(signUpForm.getPassword()), signUpForm.getAvatar(), signUpForm.getPhone());
+        user.getRoles().add(new Role(2L));
+        emailService.sendSimpleMessage(new MailObject());
+
         userService.save(user);
         return new ResponseEntity<>(new ResponseMessage("success"), HttpStatus.OK);
     }
@@ -71,7 +94,9 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String token = jwtProvider.createToken(authentication);
         UserPrincipal userPrinciple = (UserPrincipal) authentication.getPrincipal();
-//        Optional<User> currentUser = userService.findByUsername(signInForm.getUsername());
+        Optional<User> currentUser = userService.findByUsername(signInForm.getUsername());
+        currentUser.get().setOnline(true);
+        userService.save(currentUser.get());
         return ResponseEntity.ok(new JwtResponse(token, userPrinciple.getUsername(), userPrinciple.getAvatar(), userPrinciple.getAuthorities(),userPrinciple.getPhone()));
     }
 

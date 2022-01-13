@@ -17,11 +17,14 @@ import javax.persistence.*;
 @AllArgsConstructor
 public class Role {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Enumerated(EnumType.STRING)
     @NaturalId
     @Column(length = 50)
     private EnumRoleName name;
+
+    public Role(long l) {
+        this.id=l;
+    }
 }

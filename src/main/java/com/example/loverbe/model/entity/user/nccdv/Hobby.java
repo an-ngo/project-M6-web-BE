@@ -19,8 +19,4 @@ public class Hobby {
     private Long id;
 
     private String name;
-
-    @JsonBackReference
-    @ManyToMany(targetEntity = User.class)
-    private List<User> users;
 }
