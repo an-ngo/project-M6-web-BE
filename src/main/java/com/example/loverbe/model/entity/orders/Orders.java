@@ -42,7 +42,6 @@ public class Orders {
             joinColumns = {@JoinColumn(name = "orders_id")}, inverseJoinColumns = {@JoinColumn(name = "service_by_provider_id")})
     private List<ServiceByProvider> serviceByProviderList;
 
-    private EnumOrder enumOrder;
-
+    private String statusOrder;
     private String comment;
 }

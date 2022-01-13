@@ -45,7 +45,7 @@ public class ProviderRestController {
         user.setCountry(userProviderForm.getCountry());
         List<String> serviceByProvider = userProviderForm.getServiceByProviderList();
         for (int i = 0; i < serviceByProvider.size(); i++){
-            ServiceByProvider service = providerService.save(new ServiceByProvider(serviceByProvider.get(i), 0D));
+            ServiceByProvider service = providerService.save(new ServiceByProvider(serviceByProvider.get(i), 0D, user));
             user.getServiceByProviderList().add(service);
         }
         user.setHeight(userProviderForm.getHeight());

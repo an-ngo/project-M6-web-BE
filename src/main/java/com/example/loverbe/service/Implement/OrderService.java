@@ -1,6 +1,7 @@
 package com.example.loverbe.service.Implement;
 
 import com.example.loverbe.model.entity.orders.Orders;
+import com.example.loverbe.model.entity.user.User;
 import com.example.loverbe.repository.IOrdersRepository;
 import com.example.loverbe.service.IOrdersService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,5 +30,16 @@ public class OrderService implements IOrdersService {
     @Override
     public void remove(Long id) {
 orderRepository.deleteById(id);
+    }
+
+
+    @Override
+    public Iterable<Orders> findAllByUserAndStatusOrder(User user, String statusOrder) {
+        return orderRepository.findAllByUserAndStatusOrder(user, statusOrder);
+    }
+
+    @Override
+    public Iterable<Orders> findAllByUserProviderAndStatusOrder(User userProvider, String statusOrder) {
+        return orderRepository.findAllByUserProviderAndStatusOrder(userProvider, statusOrder);
     }
 }

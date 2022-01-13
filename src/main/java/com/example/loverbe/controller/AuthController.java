@@ -5,11 +5,13 @@ import com.example.loverbe.model.dto.request.SignInForm;
 import com.example.loverbe.model.dto.request.SignUpForm;
 import com.example.loverbe.model.dto.response.JwtResponse;
 import com.example.loverbe.model.dto.response.ResponseMessage;
+import com.example.loverbe.model.email.MailObject;
 import com.example.loverbe.model.entity.user.Role;
 import com.example.loverbe.model.entity.user.User;
 import com.example.loverbe.security.jwt.JwtProvider;
 import com.example.loverbe.security.userprincal.UserDetailSevices;
 import com.example.loverbe.security.userprincal.UserPrincipal;
+import com.example.loverbe.service.IEmailService;
 import com.example.loverbe.service.IRoleService;
 import com.example.loverbe.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Optional;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping()
@@ -41,6 +45,20 @@ public class AuthController {
     AuthenticationManager authenticationManager;
     @Autowired
     UserDetailSevices userDetailSevices;
+    @Autowired
+    public IEmailService emailService;
+
+    private static final Map<String, Map<String, String>> labels;
+
+    static {
+        labels = new HashMap<>();
+        //Simple email
+        Map<String, String> props = new HashMap<>();
+        props.put("headerText", "Send Simple Email");
+        props.put("messageLabel", "Message");
+        props.put("additionalInfo", "");
+        labels.put("send", props);
+    }
 
     @GetMapping("/listRole")
     public ResponseEntity<?> listRole() {
@@ -63,6 +81,8 @@ public class AuthController {
         }
         User user = new User(signUpForm.getUsername(), signUpForm.getEmail(), passwordEncoder.encode(signUpForm.getPassword()), signUpForm.getAvatar(), signUpForm.getPhone());
         user.getRoles().add(new Role(2L));
+        emailService.sendSimpleMessage(new MailObject());
+
         userService.save(user);
         return new ResponseEntity<>(new ResponseMessage("success"), HttpStatus.OK);
     }

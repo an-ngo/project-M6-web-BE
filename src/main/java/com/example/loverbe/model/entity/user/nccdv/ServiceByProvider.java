@@ -25,8 +25,9 @@ public class ServiceByProvider {
     @ManyToOne(targetEntity = User.class)
     private User user;
 
-    public ServiceByProvider(String name, Double price) {
+    public ServiceByProvider(String name, Double price, User user) {
         this.name = name;
         this.price = price;
+        this.user = user;
     }
 }
