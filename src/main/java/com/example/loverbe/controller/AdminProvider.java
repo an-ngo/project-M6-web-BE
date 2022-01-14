@@ -23,13 +23,4 @@ public class AdminProvider {
     public ResponseEntity<Page<User>> findAll(@PageableDefault(value = 5) Pageable pageable){
         return new ResponseEntity<>(userService.findAllUser(pageable), HttpStatus.OK);
     }
-    @PutMapping("/{id}/{statusProvider}")
-    public ResponseEntity<User> changeStatusProvider(@PathVariable String statusProvider, @PathVariable Long id){
-        Optional<User> currentUser = userService.findById(id);
-        if (!currentUser.isPresent()){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        currentUser.get().setIsStatusProvider(statusProvider);
-        return new ResponseEntity<>(userService.save(currentUser.get()), HttpStatus.ACCEPTED);
-    }
 }

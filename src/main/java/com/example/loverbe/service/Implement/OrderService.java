@@ -1,5 +1,6 @@
 package com.example.loverbe.service.Implement;
 
+import com.example.loverbe.enums.EnumOrder;
 import com.example.loverbe.model.entity.orders.Orders;
 import com.example.loverbe.model.entity.user.User;
 import com.example.loverbe.repository.IOrdersRepository;
@@ -33,12 +34,12 @@ public class OrderService implements IOrdersService {
     }
 
     @Override
-    public Iterable<Orders> findAllByUserAndStatusOrder(User user, String statusOrder) {
+    public Iterable<Orders> findAllByUserAndStatusOrder(User user, EnumOrder statusOrder) {
         return orderRepository.findAllByUserAndStatusOrder(user, statusOrder);
     }
 
     @Override
-    public Iterable<Orders> findAllByUserProviderAndStatusOrder(User userProvider, String statusOrder) {
+    public Iterable<Orders> findAllByUserProviderAndStatusOrder(User userProvider, EnumOrder statusOrder) {
         return orderRepository.findAllByUserProviderAndStatusOrder(userProvider, statusOrder);
     }
 

@@ -2,6 +2,7 @@ package com.example.loverbe.controller;
 
 
 import com.example.loverbe.enums.EnumOrder;
+import com.example.loverbe.enums.EnumStatusProvider;
 import com.example.loverbe.model.dto.request.OrderForm;
 import com.example.loverbe.model.entity.orders.Orders;
 import com.example.loverbe.model.entity.user.User;
@@ -58,7 +59,7 @@ public class OrdersController {
         orders.setPlace(orderForm.getPlace());
         orders.setDuration(orderForm.getDuration());
         orders.setDate(new Date(orderForm.getDate()));
-        orders.setStatusOrder("PENDING");
+        orders.setStatusOrder(EnumOrder.PENDING);
         List<String> serviceList = orderForm.getServiceByProviderList();
         double money = 0;
         int count = 0;
@@ -95,9 +96,12 @@ public class OrdersController {
         Optional<Orders> orders = orderService.findById(id);
         if (!orders.isPresent()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }else
-            orderService.remove(id);
-            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        if (orders.get().getStatusOrder() == EnumOrder.COMPLETE){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        orderService.remove(id);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
     @GetMapping("/user/{status}")//list order mình book người ta theo trạng thái
     public ResponseEntity<Iterable<Orders>> findAllByStatusAndUser(@PathVariable String status){
@@ -108,7 +112,12 @@ public class OrdersController {
         if (!currentUser.isPresent()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(orderService.findAllByUserAndStatusOrder(currentUser.get(), status), HttpStatus.OK);
+        switch (status){
+            case "pending": return new ResponseEntity<>(orderService.findAllByUserAndStatusOrder(currentUser.get(), EnumOrder.PENDING), HttpStatus.OK);
+            case "received": return new ResponseEntity<>(orderService.findAllByUserAndStatusOrder(currentUser.get(), EnumOrder.RECEIVED), HttpStatus.OK);
+            case "complete": return new ResponseEntity<>(orderService.findAllByUserAndStatusOrder(currentUser.get(), EnumOrder.COMPLETE), HttpStatus.OK);
+            default: return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
     @GetMapping("/provider/{status}")//list order người ta book mình theo trạng thái
     public ResponseEntity<Iterable<Orders>> findAllByStatusAndUserProvider(@PathVariable String status){
@@ -119,7 +128,12 @@ public class OrdersController {
         if (!currentUser.isPresent()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(orderService.findAllByUserProviderAndStatusOrder(currentUser.get(), status), HttpStatus.OK);
+        switch (status){
+            case "pending": return new ResponseEntity<>(orderService.findAllByUserProviderAndStatusOrder(currentUser.get(), EnumOrder.PENDING), HttpStatus.OK);
+            case "received": return new ResponseEntity<>(orderService.findAllByUserProviderAndStatusOrder(currentUser.get(), EnumOrder.RECEIVED), HttpStatus.OK);
+            case "complete": return new ResponseEntity<>(orderService.findAllByUserProviderAndStatusOrder(currentUser.get(), EnumOrder.COMPLETE), HttpStatus.OK);
+            default: return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
     @GetMapping("/user-book")//list order mình book người ta
     public ResponseEntity<Iterable<Orders>> findAllByUser(){
@@ -149,10 +163,11 @@ public class OrdersController {
         if (!orders.isPresent()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        if (orders.get().getStatusOrder().equals("RECEIVED") || orders.get().getStatusOrder().equals("COMPLETE")){
+        if (orders.get().getStatusOrder() == EnumOrder.RECEIVED || orders.get().getStatusOrder() == EnumOrder.COMPLETE){
             return new ResponseEntity<>(orders.get() ,HttpStatus.NO_CONTENT);
         }
-        orders.get().setStatusOrder("RECEIVED");
+        orders.get().getUserProvider().setIsStatusProvider(EnumStatusProvider.BUSY);
+        orders.get().setStatusOrder(EnumOrder.RECEIVED);
         orders.get().setStartTime(LocalDate.now());
         orders.get().setComment("Đối tác đã xác nhận, chúc bạn có những giây phút thăng hoa");
         return new ResponseEntity<>(orderService.save(orders.get()), HttpStatus.ACCEPTED);
@@ -163,10 +178,11 @@ public class OrdersController {
         if (!orders.isPresent()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        if (orders.get().getStatusOrder().equals("COMPLETE") || orders.get().getStatusOrder().equals("PENDING")){
+        if (orders.get().getStatusOrder() == EnumOrder.COMPLETE || orders.get().getStatusOrder() == EnumOrder.PENDING){
             return new ResponseEntity<>(orders.get() ,HttpStatus.NO_CONTENT);
         }
-        orders.get().setStatusOrder("COMPLETE");
+        orders.get().getUserProvider().setIsStatusProvider(EnumStatusProvider.ACTIVE);
+        orders.get().setStatusOrder(EnumOrder.COMPLETE);
         orders.get().setComment("Cuộc vui đã tàn ngày: "+LocalDate.now());
         return new ResponseEntity<>(orderService.save(orders.get()), HttpStatus.ACCEPTED);
     }
