@@ -1,7 +1,6 @@
 package com.example.loverbe.model.dto.request;
 
 import com.example.loverbe.model.entity.user.nccdv.Hobby;
-import com.example.loverbe.model.entity.user.nccdv.ServiceByProvider;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -35,8 +34,6 @@ public class UserProviderForm {
     private String conditions;
 
     private String link_facebook;
-
-    private String joinDate;
 
     private String isStatusProvider;
 }
