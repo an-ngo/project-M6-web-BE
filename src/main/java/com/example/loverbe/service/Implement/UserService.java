@@ -93,4 +93,9 @@ public class UserService implements IUserService {
     public Iterable<User> find6TopViewPage() {
         return userRepository.find6TopViewPage();
     }
+
+    @Override
+    public Page<User> searchUserProvider(String gender, Long beforeYear, Long afterYear, String country, String city, Pageable pageable) {
+        return userRepository.searchUserProvider(gender, beforeYear, afterYear, country, city, pageable);
+    }
 }

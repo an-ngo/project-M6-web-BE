@@ -10,9 +10,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SearchForm {
     private String gender;
-    private String beforeYear;
-    private String afterYear;
-    private Hobby hobby;
+    private Long beforeYear;
+    private Long afterYear;
     private String country;
     private String city;
 }

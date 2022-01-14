@@ -1,5 +1,6 @@
 package com.example.loverbe.controller;
 
+import com.example.loverbe.model.dto.request.SearchForm;
 import com.example.loverbe.model.dto.request.UserEditForm;
 import com.example.loverbe.model.entity.user.User;
 import com.example.loverbe.service.IUserService;
@@ -28,6 +29,25 @@ public class UserRestController {
         return new ResponseEntity<>(userService.findAllServiceProvider(pageable), HttpStatus.OK);
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<Page<User>> search(@RequestBody SearchForm searchForm, @PageableDefault(value = 5) Pageable pageable){
+        if (searchForm.getGender() == null){
+            searchForm.setGender("%");
+        }
+        if (searchForm.getBeforeYear() == null){
+            searchForm.setBeforeYear(1980L);
+        }
+        if (searchForm.getAfterYear() == null){
+            searchForm.setAfterYear(2021L);
+        }
+        if (searchForm.getCountry() == null){
+            searchForm.setCountry("%");
+        }
+        if (searchForm.getCity() == null){
+            searchForm.setCity("%");
+        }
+        return new ResponseEntity<>(userService.searchUserProvider("%"+searchForm.getGender()+"%", searchForm.getBeforeYear(), searchForm.getAfterYear(), "%"+searchForm.getCountry()+"%", "%"+searchForm.getCity()+"%", pageable), HttpStatus.OK);
+    }
     @GetMapping("/info")
     public ResponseEntity<User> showInfo(){
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()

@@ -20,4 +20,5 @@ public interface IUserService extends IGeneralService<User>{
     Iterable<User> find8MaleUserTopCountTime();
     Iterable<User> find12TopJoinDate();
     Iterable<User> find6TopViewPage();
+    Page<User> searchUserProvider(String gender, Long beforeYear, Long afterYear, String country, String city, Pageable pageable);
 }
