@@ -79,7 +79,7 @@ public class AuthController {
             signUpForm.setAvatar("https://firebasestorage.googleapis.com/v0/b/lover-4a315.appspot.com/o/kisspng-computer-icons-avatar-social-media-blog-font-aweso-avatar-icon-5b2e99c4409623.4643918115297806762646.png?alt=media&token=8418fb57-0c41-4e1c-9c79-b28cc82e36ea");
         }
 
-        User user = new User(signUpForm.getUsername(), signUpForm.getEmail(), passwordEncoder.encode(signUpForm.getPassword()), signUpForm.getAvatar(), signUpForm.getPhone());
+        User user = new User(signUpForm.getName(), signUpForm.getUsername(), signUpForm.getEmail(), passwordEncoder.encode(signUpForm.getPassword()), signUpForm.getAvatar(), signUpForm.getPhone());
         user.getRoles().add(new Role(2L));
         emailService.sendSimpleMessage(new MailObject());
 
@@ -97,7 +97,7 @@ public class AuthController {
         Optional<User> currentUser = userService.findByUsername(signInForm.getUsername());
         currentUser.get().setOnline(true);
         userService.save(currentUser.get());
-        return ResponseEntity.ok(new JwtResponse(token, userPrinciple.getUsername(), userPrinciple.getAvatar(), userPrinciple.getAuthorities(),userPrinciple.getPhone()));
+        return ResponseEntity.ok(new JwtResponse(token,currentUser.get().getName(), currentUser.get().getUsername(), userPrinciple.getAvatar(), userPrinciple.getAuthorities(),userPrinciple.getPhone()));
     }
 
     @PutMapping("/change-avatar")
