@@ -97,14 +97,14 @@ public class User {
     private Long viewCount;
 
 
-    public User(String username, String email, String encode, String avatar, String phone) {
-        this.username = username;
-        this.email = email;
-        this.password  = encode;
-        this.avatar = avatar;
-        this.phone = phone;
-        this.setRoles(new HashSet<>());
-    }
+//    public User(String username, String email, String encode, String avatar, String phone) {
+//        this.username = username;
+//        this.email = email;
+//        this.password  = encode;
+//        this.avatar = avatar;
+//        this.phone = phone;
+//        this.setRoles(new HashSet<>());
+//    }
 
     public User(String name, String username, String email, String phone, String encode, String avatar) {
         this.name = name;
@@ -113,5 +113,6 @@ public class User {
         this.phone = phone;
         this.password  = encode;
         this.avatar = avatar;
+        this.setRoles(new HashSet<>());
     }
 }
