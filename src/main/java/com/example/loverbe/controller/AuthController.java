@@ -97,7 +97,8 @@ public class AuthController {
         Optional<User> currentUser = userService.findByUsername(signInForm.getUsername());
         currentUser.get().setOnline(true);
         userService.save(currentUser.get());
-        return ResponseEntity.ok(new JwtResponse(token, currentUser.get().getName(), userPrinciple.getUsername(), userPrinciple.getAvatar(), userPrinciple.getAuthorities(),userPrinciple.getPhone()));
+
+        return ResponseEntity.ok(new JwtResponse(token,currentUser.get().getName(), currentUser.get().getUsername(), userPrinciple.getAvatar(), userPrinciple.getAuthorities(),userPrinciple.getPhone()));
     }
 
     @PutMapping("/change-avatar")

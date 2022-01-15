@@ -18,8 +18,6 @@ public class RoomController {
     public ResponseEntity<Iterable<Room>> getAllRoom(){
         return new ResponseEntity<>(roomService.findAll(), HttpStatus.OK);
     }
-
-
     @GetMapping("/{id}")
     public ResponseEntity<Room> getRoom(@PathVariable Long id) {
         Optional<Room> roomOptional = roomService.findById(id);

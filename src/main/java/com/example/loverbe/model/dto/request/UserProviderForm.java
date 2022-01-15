@@ -13,7 +13,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @AllArgsConstructor
 public class UserProviderForm {
-    private String yearOfBirth;
+    private Long yearOfBirth;
 
     private String city;
 
@@ -34,6 +34,4 @@ public class UserProviderForm {
     private String conditions;
 
     private String link_facebook;
-
-    private String isStatusProvider;
 }

@@ -1,6 +1,7 @@
 package com.example.loverbe.controller;
 
 import com.example.loverbe.enums.EnumRoleName;
+import com.example.loverbe.enums.EnumStatusProvider;
 import com.example.loverbe.model.dto.request.UserProviderForm;
 import com.example.loverbe.model.dto.response.ResponseMessage;
 import com.example.loverbe.model.entity.user.Role;
@@ -69,9 +70,9 @@ public class ProviderRestController {
         user.setConditions(userProviderForm.getConditions());
         user.setLink_facebook(userProviderForm.getLink_facebook());
         if (user.getJoinDate() == null){
-            user.setJoinDate(new Date(String.valueOf(LocalDate.now())));
+            user.setJoinDate(LocalDate.now());
         }
-        user.setIsStatusProvider(userProviderForm.getIsStatusProvider());
+        user.setIsStatusProvider(EnumStatusProvider.ACTIVE);
         List<String> images = userProviderForm.getImageList();
         for (int i = 0; i < images.size(); i++){
             Image image = iImageService.save(new Image(images.get(i), user));
@@ -97,5 +98,22 @@ public class ProviderRestController {
         userService.save(user);
         return new ResponseEntity<>(new ResponseMessage("Create success!"), HttpStatus.OK);
 
+    }
+    @PutMapping("/{status}")
+    public ResponseEntity<User> changeStatusProvider(@PathVariable String status){
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
+        String username = userDetails.getUsername();
+        Optional<User> currentUser = userService.findByUsername(username);
+        if (!currentUser.isPresent()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        switch (status){
+            case "active": currentUser.get().setIsStatusProvider(EnumStatusProvider.ACTIVE); break;
+            case "busy": currentUser.get().setIsStatusProvider(EnumStatusProvider.BUSY); break;
+            case "disable": currentUser.get().setIsStatusProvider(EnumStatusProvider.DISABLE); break;
+            default: return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(userService.save(currentUser.get()), HttpStatus.ACCEPTED);
     }
 }

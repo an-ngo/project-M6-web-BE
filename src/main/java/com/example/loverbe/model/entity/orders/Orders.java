@@ -1,6 +1,6 @@
 package com.example.loverbe.model.entity.orders;
-import com.example.loverbe.model.entity.user.nccdv.ServiceByProvider;
 import com.example.loverbe.enums.EnumOrder;
+import com.example.loverbe.model.entity.user.nccdv.ServiceByProvider;
 import com.example.loverbe.model.entity.user.User;
 import lombok.*;
 import org.hibernate.annotations.LazyCollection;
@@ -28,13 +28,13 @@ public class Orders {
 
     private String place;
 
-    private String duration;
+    private Long duration;
 
     private LocalDate startTime;
 
     private Date date;
 
-    private Long money;
+    private Double money;
 
     @ManyToMany
     @LazyCollection(LazyCollectionOption.FALSE)
@@ -42,6 +42,6 @@ public class Orders {
             joinColumns = {@JoinColumn(name = "orders_id")}, inverseJoinColumns = {@JoinColumn(name = "service_by_provider_id")})
     private List<ServiceByProvider> serviceByProviderList;
 
-    private String statusOrder;
+    private EnumOrder statusOrder;
     private String comment;
 }

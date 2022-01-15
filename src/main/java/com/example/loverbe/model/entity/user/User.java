@@ -1,6 +1,7 @@
 package com.example.loverbe.model.entity.user;
 
 
+import com.example.loverbe.enums.EnumStatusProvider;
 import com.example.loverbe.model.entity.user.nccdv.Hobby;
 import com.example.loverbe.model.entity.user.nccdv.Image;
 import com.example.loverbe.model.entity.user.nccdv.ServiceByProvider;
@@ -14,6 +15,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.*;
 
 @Entity
@@ -58,7 +60,7 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     Set<Role> roles;
 
-    private String yearOfBirth;
+    private Long yearOfBirth;
 
     private String city;
 
@@ -86,11 +88,11 @@ public class User {
 
     private String link_facebook;
 
-    private Date joinDate;
+    private LocalDate joinDate;
 
     private Long countTime = 0L;
 
-    private String isStatusProvider;
+    private EnumStatusProvider isStatusProvider;
 
     private Long viewCount;
 

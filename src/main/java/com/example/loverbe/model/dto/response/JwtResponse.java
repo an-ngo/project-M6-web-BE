@@ -22,9 +22,9 @@ public class JwtResponse {
     private Collection<? extends GrantedAuthority> roles;
     private String phone;
 
-    public JwtResponse(String token, String name,String username,  String avatar, Collection<? extends GrantedAuthority> roles,String phone) {
+
+    public JwtResponse(String token, String name,String username, String avatar, Collection<? extends GrantedAuthority> roles,String phone) {
         this.token = token;
-//        this.type = type;
         this.name = name;
         this.username = username;
         this.avatar = avatar;

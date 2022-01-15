@@ -7,6 +7,5 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Repository
 public interface IRoomRepository extends JpaRepository<Room,Long> {
-
 }
 
