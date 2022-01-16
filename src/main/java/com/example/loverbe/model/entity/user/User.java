@@ -113,5 +113,6 @@ public class User {
         this.phone = phone;
         this.password  = encode;
         this.avatar = avatar;
+        this.setRoles(new HashSet<>());
     }
 }
