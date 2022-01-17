@@ -25,7 +25,7 @@ public class UserRestController {
     private IUserService userService;
 
     @GetMapping("/list")
-    public ResponseEntity<Page<User>> findAllServiceProvider(@PageableDefault(value = 12) Pageable pageable){
+    public ResponseEntity<Page<User>> findAllServiceProvider(@PageableDefault(value = 4) Pageable pageable){
         return new ResponseEntity<>(userService.findAllServiceProvider(pageable), HttpStatus.OK);
     }
 

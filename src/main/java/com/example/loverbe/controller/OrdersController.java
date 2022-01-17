@@ -50,6 +50,7 @@ public class OrdersController {
         if (!currentUser.isPresent()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+        orderForm.getUserProvider().setCountTime(orderForm.getUserProvider().getCountTime()+1);
         Orders orders = new Orders();
         orders.setUserProvider(orderForm.getUserProvider());
         orders.setUser(currentUser.get());

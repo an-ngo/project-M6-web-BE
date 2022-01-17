@@ -47,6 +47,7 @@ public class ProviderRestController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         User user = currentUser.get();
+        user.setCountTime(0L);
         user.setYearOfBirth(userProviderForm.getYearOfBirth());
         user.setCity(userProviderForm.getCity());
         user.setCountry(userProviderForm.getCountry());
