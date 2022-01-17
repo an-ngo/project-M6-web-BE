@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -97,5 +98,10 @@ public class UserService implements IUserService {
     @Override
     public Page<User> searchUserProvider(String gender, Long beforeYear, Long afterYear, String country, String city, Pageable pageable) {
         return userRepository.searchUserProvider(gender, beforeYear, afterYear, country, city, pageable);
+    }
+
+    @Override
+    public List<User> findAllByLongitudeBetweenAndLatitudeBetween(Double longL, Double longG, Double latL, Double latG) {
+        return userRepository.findAllByLongitudeBetweenAndLatitudeBetween(longL,longG,latL,latG);
     }
 }
