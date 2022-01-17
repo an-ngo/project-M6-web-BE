@@ -25,13 +25,14 @@ public class UserRestController {
     private IUserService userService;
 
     @GetMapping("/list")
-    public ResponseEntity<Page<User>> findAllServiceProvider(@PageableDefault(value = 5) Pageable pageable){
+    public ResponseEntity<Page<User>> findAllServiceProvider(@PageableDefault(value = 12) Pageable pageable){
         return new ResponseEntity<>(userService.findAllServiceProvider(pageable), HttpStatus.OK);
     }
 
-    @PostMapping ("/search")
-    public ResponseEntity<Page<User>> search(@RequestBody SearchForm searchForm, @PageableDefault(value = 3) Pageable pageable){
-        if (searchForm.getGender() == null || searchForm.getGender().equals("")){
+
+    @GetMapping("/search")
+    public ResponseEntity<Page<User>> search(@RequestBody SearchForm searchForm, @PageableDefault(value = 5) Pageable pageable){
+        if (searchForm.getGender() == null){
             searchForm.setGender("%");
         }
         if (searchForm.getBeforeYear() == null){
