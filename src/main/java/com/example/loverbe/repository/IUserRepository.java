@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -31,4 +32,5 @@ public interface IUserRepository extends JpaRepository<User, Long> {
     Iterable<User> find6TopViewPage();
     @Query(value = "select * from users where gender like ? and year_of_birth >= ? and year_of_birth <= ? and country like ? and city like ? and (is_status_provider = 1 or is_status_provider = 2) order by view_count DESC", nativeQuery = true)
     Page<User> searchUserProvider(String gender, Long beforeYear, Long afterYear, String country, String city, Pageable pageable);
+    List<User> findAllByLongitudeBetweenAndLatitudeBetween(Double longL, Double longG, Double latL, Double latG);
 }

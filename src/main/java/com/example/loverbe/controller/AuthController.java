@@ -21,6 +21,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -98,6 +99,21 @@ public class AuthController {
         currentUser.get().setOnline(true);
         userService.save(currentUser.get());
         return ResponseEntity.ok(new JwtResponse(token,currentUser.get().getName(), currentUser.get().getUsername(), userPrinciple.getAvatar(), userPrinciple.getAuthorities(),userPrinciple.getPhone()));
+    }
+
+    @GetMapping("/logout/logout")
+    public ResponseEntity<?> logout(){
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
+        String username = userDetails.getUsername();
+        Optional<User> currentUser = userService.findByUsername(username);
+        if(currentUser.isPresent()){
+            currentUser.get().setOnline(false);
+            userService.save(currentUser.get());
+            return ResponseEntity.ok("logout success");
+        }else{
+         return new ResponseEntity<>("not found user",HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PutMapping("/change-avatar")

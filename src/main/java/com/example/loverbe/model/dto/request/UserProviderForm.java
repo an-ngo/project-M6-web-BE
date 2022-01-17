@@ -36,4 +36,8 @@ public class UserProviderForm {
 
     private String link_facebook;
 
+    private Double latitude;
+
+    private Double longitude;
+
 }
