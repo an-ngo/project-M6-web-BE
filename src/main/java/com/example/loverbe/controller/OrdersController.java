@@ -17,10 +17,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("/orders")
@@ -58,7 +55,7 @@ public class OrdersController {
         orders.setUser(currentUser.get());
         orders.setPlace(orderForm.getPlace());
         orders.setDuration(orderForm.getDuration());
-        orders.setDate(new Date(orderForm.getDate()));
+        orders.setDate(LocalDate.parse(orderForm.getDate()));
         orders.setStatusOrder(EnumOrder.PENDING);
         List<String> serviceList = orderForm.getServiceByProviderList();
         double money = 0;

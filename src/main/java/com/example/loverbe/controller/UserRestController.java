@@ -29,9 +29,9 @@ public class UserRestController {
         return new ResponseEntity<>(userService.findAllServiceProvider(pageable), HttpStatus.OK);
     }
 
-    @GetMapping("/search")
-    public ResponseEntity<Page<User>> search(@RequestBody SearchForm searchForm, @PageableDefault(value = 5) Pageable pageable){
-        if (searchForm.getGender() == null){
+    @PostMapping ("/search")
+    public ResponseEntity<Page<User>> search(@RequestBody SearchForm searchForm, @PageableDefault(value = 3) Pageable pageable){
+        if (searchForm.getGender() == null || searchForm.getGender().equals("")){
             searchForm.setGender("%");
         }
         if (searchForm.getBeforeYear() == null){
@@ -40,10 +40,10 @@ public class UserRestController {
         if (searchForm.getAfterYear() == null){
             searchForm.setAfterYear(2021L);
         }
-        if (searchForm.getCountry() == null){
+        if (searchForm.getCountry() == null || searchForm.getCountry().equals("")){
             searchForm.setCountry("%");
         }
-        if (searchForm.getCity() == null){
+        if (searchForm.getCity() == null || searchForm.getCity().equals("")){
             searchForm.setCity("%");
         }
         return new ResponseEntity<>(userService.searchUserProvider("%"+searchForm.getGender()+"%", searchForm.getBeforeYear(), searchForm.getAfterYear(), "%"+searchForm.getCountry()+"%", "%"+searchForm.getCity()+"%", pageable), HttpStatus.OK);

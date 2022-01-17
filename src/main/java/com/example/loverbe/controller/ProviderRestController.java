@@ -65,7 +65,9 @@ public class ProviderRestController {
         }
         user.setHeight(userProviderForm.getHeight());
         user.setWeight(userProviderForm.getWeight());
-        user.setHobbyList(userProviderForm.getHobbyList());
+        if (!userProviderForm.getHobbyList().isEmpty()){
+            user.setHobbyList(userProviderForm.getHobbyList());
+        }
         user.setDescription(userProviderForm.getDescription());
         user.setConditions(userProviderForm.getConditions());
         user.setLink_facebook(userProviderForm.getLink_facebook());

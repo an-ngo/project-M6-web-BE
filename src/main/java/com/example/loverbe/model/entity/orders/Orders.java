@@ -8,8 +8,8 @@ import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 @Entity
 @Data
@@ -32,7 +32,7 @@ public class Orders {
 
     private LocalDate startTime;
 
-    private Date date;
+    private LocalDate date;
 
     private Double money;
 
