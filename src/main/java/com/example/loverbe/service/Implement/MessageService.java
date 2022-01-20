@@ -1,6 +1,7 @@
 package com.example.loverbe.service.Implement;
 
 import com.example.loverbe.model.entity.room.Message;
+import com.example.loverbe.model.entity.room.Room;
 import com.example.loverbe.repository.IMessageRepository;
 import com.example.loverbe.service.IMessageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,5 +31,10 @@ public class MessageService implements IMessageService {
     @Override
     public void remove(Long id) {
         messageRepository.deleteById(id);
+    }
+
+    @Override
+    public Iterable<Message> findAllByRoom(Room room) {
+        return messageRepository.findAllByRoom(room);
     }
 }

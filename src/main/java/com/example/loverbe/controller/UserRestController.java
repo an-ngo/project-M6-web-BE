@@ -33,7 +33,7 @@ public class UserRestController {
 
 
     @PostMapping("/search")
-    public ResponseEntity<Page<User>> search(@RequestBody SearchForm searchForm, @PageableDefault(value = 3) Pageable pageable){
+    public ResponseEntity<Page<User>> search(@RequestBody SearchForm searchForm, @PageableDefault(value = 4) Pageable pageable){
         if (searchForm.getGender() == null){
             searchForm.setGender("%");
         }

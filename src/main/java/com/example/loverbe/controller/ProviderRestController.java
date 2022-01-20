@@ -51,6 +51,10 @@ public class ProviderRestController {
         user.setYearOfBirth(userProviderForm.getYearOfBirth());
         user.setCity(userProviderForm.getCity());
         user.setCountry(userProviderForm.getCountry());
+        if (userProviderForm.getLatitude() != null && userProviderForm.getLongitude() != null){
+            user.setLatitude(userProviderForm.getLatitude());
+            user.setLongitude(userProviderForm.getLongitude());
+        }
         List<String> serviceByProvider = userProviderForm.getServiceByProviderList();
         for (int i = 0; i < serviceByProvider.size(); i++){
             boolean check = true;

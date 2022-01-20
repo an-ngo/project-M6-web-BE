@@ -49,10 +49,9 @@ public class RoomController {
         }
     }
 
-    @PostMapping("/create")
+    @PostMapping
     public ResponseEntity<Room> createCustomer(@RequestBody Room room) {
-        roomService.save(room);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(roomService.save(room) ,HttpStatus.CREATED);
     }
 
 }
