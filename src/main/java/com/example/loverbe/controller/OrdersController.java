@@ -102,7 +102,7 @@ public class OrdersController {
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
     @GetMapping("/user/{status}")//list order mình book người ta theo trạng thái
-    public ResponseEntity<Iterable<Orders>> findAllByStatusAndUser(@PathVariable String status){
+        public ResponseEntity<Iterable<Orders>> findAllByStatusAndUser(@PathVariable String status){
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
                 .getPrincipal();
         String username = userDetails.getUsername();

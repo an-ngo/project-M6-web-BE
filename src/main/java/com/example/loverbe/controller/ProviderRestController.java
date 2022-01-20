@@ -104,8 +104,7 @@ public class ProviderRestController {
     }
     @PutMapping("/{status}")
     public ResponseEntity<User> changeStatusProvider(@PathVariable String status){
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
-                .getPrincipal();
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = userDetails.getUsername();
         Optional<User> currentUser = userService.findByUsername(username);
         if (!currentUser.isPresent()){
@@ -119,6 +118,5 @@ public class ProviderRestController {
         }
         return new ResponseEntity<>(userService.save(currentUser.get()), HttpStatus.ACCEPTED);
     }
-
 
 }
