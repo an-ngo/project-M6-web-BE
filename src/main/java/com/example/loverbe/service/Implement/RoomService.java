@@ -32,4 +32,9 @@ public class RoomService implements IRoomService {
     public void remove(Long id) {
         roomRepository.deleteById(id);
     }
+
+    @Override
+    public Iterable<Room> findAllByUserId(Long id) {
+        return roomRepository.findAllByUserId(id);
+    }
 }

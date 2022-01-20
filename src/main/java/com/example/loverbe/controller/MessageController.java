@@ -3,20 +3,24 @@ package com.example.loverbe.controller;
 import com.example.loverbe.model.entity.room.Message;
 import com.example.loverbe.model.entity.room.Room;
 import com.example.loverbe.service.IMessageService;
-import com.fasterxml.jackson.databind.util.JSONPObject;
-import org.json.JSONObject;
+import com.example.loverbe.service.Implement.MessageProcessor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
+import reactor.core.publisher.Flux;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+
+import static org.hibernate.tool.schema.SchemaToolingLogging.LOGGER;
 
 @RestController
 @CrossOrigin("*")
@@ -26,10 +30,10 @@ public class MessageController {
     private IMessageService messageService;
 
     private Map<Long, SseEmitter> emitterMap = new HashMap<>();
+    private SseEmitter sseEmitter = new SseEmitter(Long.MAX_VALUE);
 
     @RequestMapping(value = "/subscribe", consumes = MediaType.ALL_VALUE)
     public SseEmitter subscribe(@RequestParam Long roomId){
-        SseEmitter sseEmitter  = new SseEmitter(Long.MAX_VALUE);
         sendInitEvent(sseEmitter);
         emitterMap.put(roomId, sseEmitter);
         sseEmitter.onCompletion(() -> emitterMap.remove(sseEmitter));
@@ -51,7 +55,7 @@ public class MessageController {
         SseEmitter sseEmitter = emitterMap.get(roomId);
         if (sseEmitter != null){
             try {
-                sseEmitter.send(SseEmitter.event().name("sendmess").data(message));
+                sseEmitter.send(message);
             } catch (IOException e) {
                 emitterMap.remove(sseEmitter);
             }

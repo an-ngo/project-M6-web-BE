@@ -38,6 +38,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
     implementation 'org.springframework.boot:spring-boot-starter-mail'
     implementation 'org.json:json:20160807'
+
+    implementation('org.springframework.boot:spring-boot-starter-webflux')
+
 }
 
 test {

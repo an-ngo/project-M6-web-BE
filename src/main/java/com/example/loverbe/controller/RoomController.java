@@ -53,5 +53,8 @@ public class RoomController {
     public ResponseEntity<Room> createCustomer(@RequestBody Room room) {
         return new ResponseEntity<>(roomService.save(room) ,HttpStatus.CREATED);
     }
-
+    @GetMapping("/user/{id}")
+    public ResponseEntity<Iterable<Room>> findByUserId(@PathVariable Long id){
+        return new ResponseEntity<>(roomService.findAllByUserId(id), HttpStatus.OK);
+    }
 }
