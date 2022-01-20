@@ -122,6 +122,4 @@ public class ProviderRestController {
         }
         return new ResponseEntity<>(userService.save(currentUser.get()), HttpStatus.ACCEPTED);
     }
-
-
 }

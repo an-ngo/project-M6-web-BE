@@ -1,7 +1,9 @@
 package com.example.loverbe.controller;
 
+import com.example.loverbe.enums.EnumStatusProvider;
 import com.example.loverbe.model.dto.request.SearchForm;
 import com.example.loverbe.model.dto.request.UserEditForm;
+import com.example.loverbe.model.dto.response.ResponseMessage;
 import com.example.loverbe.model.entity.user.User;
 import com.example.loverbe.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -124,4 +126,21 @@ public class UserRestController {
     public ResponseEntity<Iterable<User>> getTop6ViewPage(){
         return new ResponseEntity<>(userService.find6TopViewPage(), HttpStatus.OK);
     }
+
+@PutMapping("/change-status-provider/{id}")
+    public ResponseEntity<User> changeStatusProvider(@PathVariable ("id") User user, @RequestParam("isStatusProvider")EnumStatusProvider statusProvider){
+        Optional<User> userOptional = userService.findById(user.getId());
+        if (!userOptional.isPresent()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            if (statusProvider.equals("active")){
+                user.setIsStatusProvider(EnumStatusProvider.ACTIVE);
+            } else if (statusProvider.equals("busy")){
+                user.setIsStatusProvider(EnumStatusProvider.BUSY);
+            } else if (statusProvider.equals("disable")){
+                user.setIsStatusProvider(EnumStatusProvider.DISABLE);
+            }
+            return new ResponseEntity<>(userService.save(user),HttpStatus.OK);
+        }
+}
 }
