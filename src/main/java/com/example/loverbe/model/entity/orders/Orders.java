@@ -1,7 +1,9 @@
 package com.example.loverbe.model.entity.orders;
 import com.example.loverbe.enums.EnumOrder;
+import com.example.loverbe.model.entity.room.Room;
 import com.example.loverbe.model.entity.user.nccdv.ServiceByProvider;
 import com.example.loverbe.model.entity.user.User;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -43,5 +45,7 @@ public class Orders {
     private List<ServiceByProvider> serviceByProviderList;
 
     private EnumOrder statusOrder;
+    @OneToOne(targetEntity = Room.class)
+    private Room room;
     private String comment;
 }

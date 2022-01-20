@@ -1,19 +1,66 @@
 package com.example.loverbe.controller;
 
 import com.example.loverbe.model.entity.room.Message;
+import com.example.loverbe.model.entity.room.Room;
 import com.example.loverbe.service.IMessageService;
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
+import java.io.IOException;
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
 @RequestMapping("/messages")
 public class MessageController {
-@Autowired private IMessageService messageService;
+    @Autowired
+    private IMessageService messageService;
+
+    private Map<Long, SseEmitter> emitterMap = new HashMap<>();
+
+    @RequestMapping(value = "/subscribe", consumes = MediaType.ALL_VALUE)
+    public SseEmitter subscribe(@RequestParam Long roomId){
+        SseEmitter sseEmitter  = new SseEmitter(Long.MAX_VALUE);
+        sendInitEvent(sseEmitter);
+        emitterMap.put(roomId, sseEmitter);
+        sseEmitter.onCompletion(() -> emitterMap.remove(sseEmitter));
+        sseEmitter.onTimeout(() -> emitterMap.remove(sseEmitter));
+        sseEmitter.onError((e) -> emitterMap.remove(sseEmitter));
+        return sseEmitter;
+    }
+    private void sendInitEvent(SseEmitter sseEmitter){
+        try {
+            sseEmitter.send(SseEmitter.event().name("INIT"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @PostMapping
+    public void dispatchEventToClients(@RequestBody Message message, @RequestParam Long roomId){
+        message.setTimeSend(LocalDate.now());
+        SseEmitter sseEmitter = emitterMap.get(roomId);
+        if (sseEmitter != null){
+            try {
+                sseEmitter.send(SseEmitter.event().name("sendmess").data(message));
+            } catch (IOException e) {
+                emitterMap.remove(sseEmitter);
+            }
+        }
+    }
+    @PostMapping("/room")
+    public ResponseEntity<Iterable<Message>> getByRoom(@RequestBody Room room){
+        return new ResponseEntity<>(messageService.findAllByRoom(room), HttpStatus.OK);
+    }
     @GetMapping
     public ResponseEntity<Iterable<Message>> getAllMessage(){
         return new ResponseEntity<>(messageService.findAll(), HttpStatus.OK);
@@ -52,7 +99,7 @@ public class MessageController {
 
     @PostMapping("/create")
     public ResponseEntity<Message> createCustomer(@RequestBody Message message) {
-        messageService.save(message);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        message.setTimeSend(LocalDate.now());
+        return new ResponseEntity<>(messageService.save(message) ,HttpStatus.CREATED);
     }
 }

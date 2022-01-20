@@ -28,7 +28,7 @@ public interface IUserRepository extends JpaRepository<User, Long> {
     Iterable<User> find8MaleUserTopCountTime();
     @Query(value = "select * from users where is_status_provider = 1 or  is_status_provider = 2 order by join_date DESC limit 12", nativeQuery = true)
     Iterable<User> find12TopJoinDate();
-    @Query(value = "select * from users where is_status_provider = 1 or  is_status_provider = 2 order by view_count DESC limit 6", nativeQuery = true)
+    @Query(value = "select * from users where is_status_provider = 1 or  is_status_provider = 2 order by view_count limit 6", nativeQuery = true)
     Iterable<User> find6TopViewPage();
     @Query(value = "select * from users where gender like ? and year_of_birth >= ? and year_of_birth <= ? and country like ? and city like ? and (is_status_provider = 1 or is_status_provider = 2) order by view_count DESC", nativeQuery = true)
     Page<User> searchUserProvider(String gender, Long beforeYear, Long afterYear, String country, String city, Pageable pageable);
