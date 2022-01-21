@@ -1,4 +1,4 @@
-package com.example.loverbe.model.enums;
+package com.example.loverbe.enums;
 
 public enum EnumOrder {
     PENDING,

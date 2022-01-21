@@ -1,17 +1,22 @@
 package com.example.loverbe.model.entity.user;
 
-import com.example.loverbe.model.entity.room.Room;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import com.example.loverbe.enums.EnumStatusProvider;
+import com.example.loverbe.model.entity.user.nccdv.Hobby;
+import com.example.loverbe.model.entity.user.nccdv.Image;
+import com.example.loverbe.model.entity.user.nccdv.ServiceByProvider;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
-import java.util.List;
-import java.util.Set;
+import java.time.LocalDate;
+import java.util.*;
 
 @Entity
 @Data
@@ -30,25 +35,20 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    //        @NotBlank
-//        @Size(min = 3, max = 50)
     private String name;
-    @NotBlank
-    @Size(min = 3, max = 50)
+
     private String username;
+
     @NaturalId
-    @NotBlank
-    @Size(max = 50)
-    @Email
     private String email;
+
     @JsonIgnore
-    @NotBlank
-    @Size(min = 6, max = 100)
-    @Column(nullable = false)
     private String password;
     @Column(columnDefinition = "boolean default true")
-    private boolean status;
+    private boolean isOnline;
+
     private String phone;
+
     private String gender;
 
     @Lob
@@ -60,18 +60,75 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     Set<Role> roles;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JsonBackReference
-    private List<NCCDV> nccdvList;
+    private Long yearOfBirth;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    private List<Room> roomList;
+    private String city;
+
+    private String country;
+
+    @OneToMany(mappedBy = "user")
+    private List<ServiceByProvider> serviceByProviderList;
+
+    @OneToMany(targetEntity = Image.class,mappedBy = "user", cascade = CascadeType.REMOVE)
+    private List<Image> imageList;
+
+    private String height;
+
+    private String weight;
+
+    @ManyToMany
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @JoinTable(name = "user_hobby",
+            joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "hobby_id")})
+    private List<Hobby> hobbyList;
+
+    private String description;
+
+    private String conditions;
+
+    private String link_facebook;
+
+    private LocalDate joinDate;
+
+    private Long countTime = 0L;
+
+    private EnumStatusProvider isStatusProvider;
+
+    private Long viewCount;
+
+    private Double latitude;
+
+    private Double longitude;
 
 
-    public User(String username, String email, String encode, String avatar) {
+//    public User(String username, String email, String encode, String avatar, String phone) {
+//        this.username = username;
+//        this.email = email;
+//        this.password  = encode;
+//        this.avatar = avatar;
+//        this.phone = phone;
+//        this.setRoles(new HashSet<>());
+//    }
+
+    public User(String name, String username, String email, String phone, String encode, String avatar) {
+        this.name = name;
         this.username = username;
         this.email = email;
+        this.phone = phone;
         this.password  = encode;
         this.avatar = avatar;
+        this.setRoles(new HashSet<>());
+    }
+
+    public User(String name, String username, String email, String phone, String encode, String avatar, Double latitude, Double longitude) {
+        this.name = name;
+        this.username = username;
+        this.email = email;
+        this.phone = phone;
+        this.password  = encode;
+        this.avatar = avatar;
+        this.setRoles(new HashSet<>());
+        this.latitude=latitude;
+        this.longitude=longitude;
     }
 }

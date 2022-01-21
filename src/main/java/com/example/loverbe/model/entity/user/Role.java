@@ -1,6 +1,6 @@
 package com.example.loverbe.model.entity.user;
 
-import com.example.loverbe.model.enums.EnumRoleName;
+import com.example.loverbe.enums.EnumRoleName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,7 +17,6 @@ import javax.persistence.*;
 @AllArgsConstructor
 public class Role {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Enumerated(EnumType.STRING)
@@ -25,5 +24,7 @@ public class Role {
     @Column(length = 50)
     private EnumRoleName name;
 
-
+    public Role(long l) {
+        this.id=l;
+    }
 }

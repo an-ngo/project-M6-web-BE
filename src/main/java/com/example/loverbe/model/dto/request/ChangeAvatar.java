@@ -8,5 +8,4 @@ import lombok.*;
 @AllArgsConstructor
 public class ChangeAvatar {
     private String avatar;
-
 }

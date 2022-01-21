@@ -1,5 +1,8 @@
 package com.example.loverbe.security.SecurityConfig;
 
+import com.example.loverbe.enums.EnumRoleName;
+import com.example.loverbe.model.entity.user.Role;
+import com.example.loverbe.model.entity.user.User;
 import com.example.loverbe.security.jwt.JwtEntryPoint;
 import com.example.loverbe.security.jwt.JwtTokenFilter;
 import com.example.loverbe.service.IRoleService;
@@ -18,6 +21,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import javax.annotation.PostConstruct;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Configuration
 @EnableWebSecurity
@@ -45,37 +53,40 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
+    @PostConstruct
+    public void init(){
+        List<User> users = (List<User>) userService.findAll();
+        List<Role> roles = (List<Role>) roleService.findAll();
+        if (roles.isEmpty()){
+            Role roleAdmin = new Role();
+            roleAdmin.setId(1L);
+            roleAdmin.setName(EnumRoleName.ROLE_ADMIN);
+            roleService.save(roleAdmin);
+            Role roleUser = new Role();
+            roleUser.setId(2L);
+            roleUser.setName(EnumRoleName.ROLE_USER);
+            roleService.save(roleUser);
+            Role roleProvider = new Role();
+            roleProvider.setId(3L);
+            roleProvider.setName(EnumRoleName.ROLE_PROVIDER);
+            roleService.save(roleProvider);
+        }
+        if (users.isEmpty()){
+            User userAdmin = new User();
+            Set<Role> rolesSet = new HashSet<>();
+            rolesSet.add(new Role(1L, EnumRoleName.ROLE_ADMIN));
+            userAdmin.setUsername("admin");
+            userAdmin.setPassword(passwordEncoder.encode("123456"));
+            userAdmin.setRoles(rolesSet);
+            userService.save(userAdmin);
+        }
+    }
+
     @Override
     public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
         authenticationManagerBuilder.userDetailsService(userDetailsService)
                 .passwordEncoder(passwordEncoder());
     }
-
-//    @PostConstruct
-//    public void init() {
-//        List<User> users = (List<User>) userService.findAll();
-//        List<Role> roles = (List<Role>) roleService.findAll();
-//        if (roles.isEmpty()) {
-//            Role roleAdmin = new Role();
-//            roleAdmin.setId(1L);
-//            roleAdmin.setName(EnumRoleName.ROLE_ADMIN);
-//            roleService.save(roleAdmin);
-//            Role roleCoach = new Role();
-//            roleCoach.setId(2L);
-//            roleCoach.setName(EnumRoleName.ROLE_USER);
-//            roleService.save(roleCoach);
-//        }
-//        if (users.isEmpty()) {
-//            User admin = new User();
-//            Set<Role> roles1 = new HashSet<>();
-//            roles1.add(new Role(1L, EnumRoleName.ROLE_USER));
-//            admin.setUsername("admin");
-//            admin.setPassword(passwordEncoder.encode("Admin1@"));
-//            admin.setEmail("admin@gmail.com");
-//            admin.setRoles(roles1);
-//            userService.save(admin);
-//        }
-//    }
 
     @Bean
     @Override
